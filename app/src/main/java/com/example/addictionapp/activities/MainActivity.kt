@@ -1,4 +1,4 @@
-package com.example.addictionapp
+package com.example.addictionapp.activities
 
 import android.Manifest
 import android.app.usage.UsageEvents
@@ -11,20 +11,14 @@ import android.os.Handler
 import android.util.Log
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.addictionapp.utils.MessageEvent
+import com.example.addictionapp.R
 import org.greenrobot.eventbus.EventBus
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var cameraExecutor: ExecutorService
 
     private lateinit var usm: UsageStatsManager;
     private var lastCheck = 0L;
@@ -37,14 +31,10 @@ class MainActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main);
 
-        if (allPermissionsGranted()) {
-            startCamera()
-        } else {
-            ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, 1)
+        if (!allPermissionsGranted()) {
+            ActivityCompat.requestPermissions(this,
+                REQUIRED_PERMISSIONS, 1)
         }
-
-        cameraExecutor = Executors.newSingleThreadExecutor()
 
         usm = getSystemService(UsageStatsManager::class.java)
 
@@ -61,7 +51,11 @@ class MainActivity : AppCompatActivity() {
             Log.i("test", "On facebook currently for ${duration}s")
             if(duration > 2 && !activatedAction) {
                 activatedAction = true
-                EventBus.getDefault().post(MessageEvent(false));
+                EventBus.getDefault().post(
+                    MessageEvent(
+                        false
+                    )
+                );
             }
         }
 
@@ -95,52 +89,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-
-        cameraProviderFuture.addListener(Runnable {
-            // Used to bind the lifecycle of cameras to the lifecycle owner
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-
-            // Preview
-            val preview = Preview.Builder()
-                .build()
-                .also {
-                    it.setSurfaceProvider(viewFinder.createSurfaceProvider())
-                }
-
-            // Select back camera as a default
-            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
-
-            try {
-                // Unbind use cases before rebinding
-                cameraProvider.unbindAll()
-
-                // Bind use cases to camera
-                cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview)
-
-            } catch(exc: Exception) {
-                Log.e(CAMERA_TAG, "Use case binding failed", exc)
-            }
-
-        }, ContextCompat.getMainExecutor(this))
-
-    }
-
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
             baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
     companion object {
-        private const val CAMERA_TAG = "Camera"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cameraExecutor.shutdown()
     }
 }

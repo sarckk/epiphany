@@ -1,4 +1,4 @@
-package com.example.addictionapp
+package com.example.addictionapp.utils
 
 import android.accessibilityservice.AccessibilityService
 import android.content.Intent
