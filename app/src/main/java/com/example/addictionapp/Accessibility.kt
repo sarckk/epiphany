@@ -1,47 +1,43 @@
 package com.example.addictionapp
 
 import android.accessibilityservice.AccessibilityService
-import android.accessibilityservice.AccessibilityServiceInfo
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
-import android.content.pm.ActivityInfo
-import android.content.pm.PackageManager
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 
 
 class Accessibility : AccessibilityService() {
 
-    var mAutoService : AccessibilityService? = null;
     var isFacebookRunning : Boolean = false;
+    var facebookPkgName = "com.facebook.katana";
 
     override fun onInterrupt() {}
-
-    override fun onAccessibilityEvent(event: AccessibilityEvent) {
-        if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            if (!isFacebookRunning && event.packageName.toString() == "com.facebook.katana") {
-                launchSplitScreen()
-                isFacebookRunning = event.packageName.toString() == "com.facebook.katana"
-            }
-        }
-
-    }
 
     override fun onServiceConnected() {
         super.onServiceConnected();
         mAutoService = this
     }
 
-    private fun launchSplitScreen() {
-        mAutoService?.performGlobalAction(AccessibilityService.GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN)
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
 
-        var startSplitScreen = Intent("com.example.addictionapp")
-        startSplitScreen.addFlags(FLAG_ACTIVITY_LAUNCH_ADJACENT)
-        startSplitScreen.addFlags(FLAG_ACTIVITY_NEW_TASK)
-        startSplitScreen.addFlags(FLAG_ACTIVITY_MULTIPLE_TASK)
+    companion object {
+        var mAutoService : Accessibility? = null;
+        public fun getInstance(): Accessibility? {
+            return mAutoService;
+        }
+    }
 
-        startActivity(startSplitScreen)
+    public fun launchSplitScreen() {
+        Log.i("test", "Launching split screen...")
+
+        /*var startCamera = Intent("com.example.addictionapp")
+        startCamera.addFlags(FLAG_ACTIVITY_LAUNCH_ADJACENT)
+        startCamera.addFlags(FLAG_ACTIVITY_NEW_TASK)
+        startCamera.addFlags(FLAG_ACTIVITY_MULTIPLE_TASK)
+
+        startActivity(startCamera)*/
+
+        mAutoService?.performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN)
     }
 }

@@ -4,6 +4,7 @@
     package="com.example.addictionapp">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
     <application
         android:allowBackup="true"
