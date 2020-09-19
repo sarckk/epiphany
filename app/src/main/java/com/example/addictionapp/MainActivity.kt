@@ -17,6 +17,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var usm: UsageStatsManager;
     private var lastCheck = 0L;
     private var currentlyOnFacebook = false;
+    private var activatedAction = false;
     private var onFacebookSince = 0L;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +59,9 @@ class MainActivity : AppCompatActivity() {
         if(currentlyOnFacebook) {
             var duration = (System.currentTimeMillis() - onFacebookSince) / 1000;
             Log.i("test", "On facebook currently for ${duration}s")
-            if(duration > 2) {
-                Accessibility.getInstance()?.launchSplitScreen();
+            if(duration > 2 && !activatedAction) {
+                activatedAction = true
+                EventBus.getDefault().post(MessageEvent(false));
             }
         }
 
