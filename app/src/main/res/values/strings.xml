@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Addictionapp</string>
+    <string name="accessibility_service_label">Addictionapp</string>
+    <string name="accessibility_service_description">I fucking hate kotlin</string>
+</resources>
