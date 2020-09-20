@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Epiphany</string>
-    <string name="accessibility_service_label">Epiphany</string>
+    <string name="app_name">epiphany</string>
+    <string name="accessibility_service_label">epiphany</string>
     <string name="accessibility_service_description">I fucking hate kotlin</string>
 </resources>
