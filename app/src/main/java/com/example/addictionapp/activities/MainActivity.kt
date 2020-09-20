@@ -1,11 +1,14 @@
 package com.example.addictionapp.activities
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.usage.UsageEvents
 import android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED
 import android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED
 import android.app.usage.UsageStatsManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -17,6 +20,8 @@ import android.view.Window
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.example.addictionapp.R
 import com.example.addictionapp.utils.LocationBroadcastReceiver
@@ -31,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private var lastCheck = 0L;
     private var currentlyOnFacebook = false;
     private var activatedAction = false;
+    private var notificationShown = false;
     private var onFacebookSince = 0L;
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -38,6 +44,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
+
+        // set up notification channel
+        createNotificationChannel()
 
         val activityIdentificationService = ActivityIdentification.getService(this)
         val pendingIntent = getPendingIntent()
@@ -104,7 +113,12 @@ class MainActivity : AppCompatActivity() {
         if(currentlyOnFacebook) {
             var duration = (System.currentTimeMillis() - onFacebookSince) / 1000;
             Log.i("test", "On facebook currently for ${duration}s")
-            if(duration > 2 && !activatedAction) {
+            if(duration > 3 && !notificationShown){
+                notificationShown = true
+                pushNotification("You have been on facebook for ${duration}s")
+            }
+
+            if(duration > 30 && !activatedAction) {
                 activatedAction = true
                 EventBus.getDefault().post(
                     MessageEvent(
@@ -126,8 +140,11 @@ class MainActivity : AppCompatActivity() {
         val evt = UsageEvents.Event();
 
         var lastResumeTime = System.currentTimeMillis();
+        Log.i("poll", evts.hasNextEvent().toString())
         while (evts.hasNextEvent()) {
             evts.getNextEvent(evt);
+            Log.i("poll", "packageName:" + evt.packageName)
+            Log.i("poll", "eventType:" + evt.eventType)
             if(evt.packageName == "com.facebook.katana" && (evt.eventType == ACTIVITY_PAUSED || evt.eventType == ACTIVITY_RESUMED)) {
                 if (evt.eventType == ACTIVITY_RESUMED) {
                     currentlyOnFacebook = true;
@@ -143,6 +160,43 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return
+        }
+        val name: CharSequence = "Social media usage notification"
+        val descriptionText = "Notification channel for reporting social media usage"
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val channel = NotificationChannel("socialmedia", name, importance).apply{
+            description = descriptionText
+        }
+        val notificationManager: NotificationManager = getSystemService(
+            Context.NOTIFICATION_SERVICE
+        ) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    private fun pushNotification(msg: String) {
+        /*
+        <-- If you want to add intent -->
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+         */
+        val builder = NotificationCompat.Builder(this, "socialmedia")
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle("Did you know?")
+            .setContentText(msg)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
+        with(NotificationManagerCompat.from(this)){
+            notify(1, builder.build())
+        }
+    }
+
+
 
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
