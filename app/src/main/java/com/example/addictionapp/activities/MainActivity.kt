@@ -6,6 +6,7 @@ import android.app.usage.UsageEvents
 import android.app.usage.UsageEvents.Event.ACTIVITY_PAUSED
 import android.app.usage.UsageEvents.Event.ACTIVITY_RESUMED
 import android.app.usage.UsageStatsManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.addictionapp.R
+import com.example.addictionapp.api.BackendCalls
 import com.example.addictionapp.utils.LocationBroadcastReceiver
 import com.example.addictionapp.utils.MessageEvent
 import com.huawei.hms.location.*
@@ -32,12 +34,16 @@ class MainActivity : AppCompatActivity() {
     private var currentlyOnFacebook = false;
     private var activatedAction = false;
     private var onFacebookSince = 0L;
+    private var backend = BackendCalls()
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
+
+        initialiseId()
+        var id = getSharedPreferences("test", Context.MODE_PRIVATE).getString("key", "")
 
         val activityIdentificationService = ActivityIdentification.getService(this)
         val pendingIntent = getPendingIntent()
@@ -65,17 +71,19 @@ class MainActivity : AppCompatActivity() {
         val mLocationCallback: LocationCallback
         mLocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                // Process the location callback result.
+                if (id != null) {
+                    backend.sendLocation(id, locationResult.lastLocation.latitude.toString(), locationResult.lastLocation.longitude.toString())
+                }
             }
         }
 
         fusedLocationProviderClient
             .requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.getMainLooper())
             .addOnSuccessListener {
-                // Processing when the API call is successful.
+                Log.i("test", "success")
             }
             .addOnFailureListener {
-                // Processing when the API call fails.
+                Log.i("test", "failure")
             }
 
 
@@ -90,6 +98,14 @@ class MainActivity : AppCompatActivity() {
 
         for(i in 1..100) {
             Handler().postDelayed(this::pollingLoop, (1000L*i))
+        }
+    }
+
+    private fun initialiseId() {
+        var sharedPreferences = getSharedPreferences("test", Context.MODE_PRIVATE)
+
+        if (!sharedPreferences.contains("key")) {
+            sharedPreferences.edit().putString("key", backend.getId()).apply()
         }
     }
 

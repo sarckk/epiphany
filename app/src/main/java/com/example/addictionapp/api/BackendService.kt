@@ -16,7 +16,7 @@ import retrofit2.http.POST;
 
 interface BackendService {
 
-    @GET("id")
+    @POST("get_new_user_id")
     fun getId(): Call<IdResult>
 
     @POST("location")
@@ -34,7 +34,7 @@ interface BackendService {
                             RxJava2CallAdapterFactory.create())
                     .addConverterFactory(
                             GsonConverterFactory.create())
-                    .baseUrl("test")
+                    .baseUrl("http://localhost:8080/")
                     .build()
 
             return retrofit.create(BackendService::class.java)

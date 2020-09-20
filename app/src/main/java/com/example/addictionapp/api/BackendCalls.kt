@@ -56,8 +56,8 @@ public class BackendCalls() {
 
     fun sendAccelerometer(id: String, state: String) : Boolean {
         var data = HashMap<String, String>()
-        data.put("id", id)
-        data.put("state", state)
+        data.put("ua_user_id", id)
+        data.put("accel", state)
 
         var result = false
         var call = backend.sendAccelerometer(data)
