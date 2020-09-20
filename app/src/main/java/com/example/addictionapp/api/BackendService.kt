@@ -1,8 +1,7 @@
 package com.example.addictionapp.api;
 
-import com.example.addictionapp.models.AccelerometerResult
-import com.example.addictionapp.models.IdResult;
-import com.example.addictionapp.models.LocationResult;
+import com.example.addictionapp.models.*
+import com.google.gson.GsonBuilder
 
 import java.util.HashMap;
 
@@ -25,17 +24,27 @@ interface BackendService {
     @POST("accelerometer")
     fun sendAccelerometer(@Body body : HashMap<String, String>): Call<AccelerometerResult>
 
+    @POST("suggestion")
+    fun getSuggestion(@Body body : HashMap<String, String>): Call<SuggestionResult>
+
+    @POST("notification")
+    fun checkForShowNotification(@Body body : HashMap<String, String>): Call<NotificationResult>
 
     companion object {
         fun create(): BackendService {
 
+            val BASE_URL = "https://a8dc5ab7dae5.ngrok.io"
+
+            var gson = GsonBuilder()
+                .setLenient()
+                .create()
+
             val retrofit = Retrofit.Builder()
-                    .addCallAdapterFactory(
-                            RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(
-                            GsonConverterFactory.create())
-                    .baseUrl("http://localhost:8080/")
-                    .build()
+                .baseUrl(BASE_URL)
+                //.client(getUnsafeOkHttpClient())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
 
             return retrofit.create(BackendService::class.java)
         }

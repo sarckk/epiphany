@@ -1,4 +1,4 @@
-package com.example.addictionapp.activities
+package com.example.addictionapp
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -23,17 +23,21 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.example.addictionapp.R
 import com.example.addictionapp.api.BackendCalls
+import com.example.addictionapp.models.SuggestionResult
 import com.example.addictionapp.utils.LocationBroadcastReceiver
 import com.example.addictionapp.utils.MessageEvent
 import com.huawei.hms.location.*
 import org.greenrobot.eventbus.EventBus
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var usm: UsageStatsManager;
+    private var id = "71053"
     private var lastCheck = 0L;
     private var currentlyOnFacebook = false;
     private var activatedAction = false;
@@ -47,8 +51,7 @@ class MainActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
 
-        initialiseId()
-        var id = getSharedPreferences("test", Context.MODE_PRIVATE).getString("key", "")
+        //initialiseId()
         createNotificationChannel()
 
         val activityIdentificationService = ActivityIdentification.getService(this)
@@ -77,9 +80,7 @@ class MainActivity : AppCompatActivity() {
         val mLocationCallback: LocationCallback
         mLocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                if (id != null) {
-                    backend.sendLocation(id, locationResult.lastLocation.latitude.toString(), locationResult.lastLocation.longitude.toString())
-                }
+                backend.sendLocation("71053", locationResult.lastLocation.latitude.toString(), locationResult.lastLocation.longitude.toString())
             }
         }
 
@@ -108,10 +109,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initialiseId() {
-        var sharedPreferences = getSharedPreferences("test", Context.MODE_PRIVATE)
-
-        if (!sharedPreferences.contains("key")) {
-            sharedPreferences.edit().putString("key", backend.getId()).apply()
+        if (id == "") {
+            id = backend.getId()
         }
     }
 
@@ -128,7 +127,17 @@ class MainActivity : AppCompatActivity() {
             Log.i("test", "On facebook currently for ${duration}s")
             if(duration > 3 && !notificationShown){
                 notificationShown = true
-                pushNotification("You have been on facebook for ${duration}s")
+                var call = backend.getSuggestion("71053")
+                call.enqueue(object : Callback<SuggestionResult> {
+                    override fun onResponse(call: Call<SuggestionResult>, response: Response<SuggestionResult>) {
+                        if (response.isSuccessful){
+                            pushNotification(response.body()!!.best_activity)
+                        }
+                    }
+                    override fun onFailure(call: Call<SuggestionResult>, t: Throwable) {
+                        Log.i("test", "Error in getSuggestion")
+                    }
+                })
             }
 
             if(duration > 30 && !activatedAction) {
@@ -175,9 +184,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            return
-        }
         val name: CharSequence = "Social media usage notification"
         val descriptionText = "Notification channel for reporting social media usage"
         val importance = NotificationManager.IMPORTANCE_HIGH
@@ -200,7 +206,7 @@ class MainActivity : AppCompatActivity() {
          */
         val builder = NotificationCompat.Builder(this, "socialmedia")
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("Did you know?")
+            .setContentTitle("You started using your social media apps...")
             .setContentText(msg)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)

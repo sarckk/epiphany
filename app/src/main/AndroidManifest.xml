@@ -30,7 +30,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
 
-        <activity android:name=".activities.CameraActivity">
+        <activity android:name=".CameraActivity">
             <intent-filter>
                 <action android:name="com.example.addictionapp" />
 
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
