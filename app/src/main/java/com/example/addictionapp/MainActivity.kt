@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
         if(currentlyOnFacebook) {
             var duration = (System.currentTimeMillis() - onFacebookSince) / 1000;
             Log.i("test", "On facebook currently for ${duration}s")
-            if(duration > 3 && !notificationShown){
+            if(duration > 15 && !notificationShown){
                 notificationShown = true
                 var call = backend.getSuggestion("71053")
                 call.enqueue(object : Callback<SuggestionResult> {
