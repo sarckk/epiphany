@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 class ReflectionDetailViewModel (
     private val reflectionRepository: ReflectionRepository
 ): ViewModel() {
-
     private val _reflectionItem = MutableLiveData<Reflection>()
     val reflectionItem: LiveData<Reflection>  = _reflectionItem
 

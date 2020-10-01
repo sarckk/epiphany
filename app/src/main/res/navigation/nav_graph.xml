@@ -22,5 +22,19 @@
         <argument
             android:name="dateCreated"
             app:argType="string" />
+        <action
+            android:id="@+id/action_reflectionDetailFragment_to_reflectionConfirmDeleteDialogFragment"
+            app:destination="@id/reflectionConfirmDeleteDialogFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/reflectionConfirmDeleteDialogFragment"
+        android:name="com.example.addictionapp.ui.reflection.detail.ReflectionConfirmDeleteDialogFragment"
+        android:label="ReflectionConfirmDeleteDialogFragment" >
+        <action
+            android:id="@+id/action_reflectionConfirmDeleteDialogFragment_to_reflectionListFragment"
+            app:destination="@id/reflectionListFragment" />
+        <action
+            android:id="@+id/action_reflectionConfirmDeleteDialogFragment_to_reflectionDetailFragment"
+            app:destination="@id/reflectionDetailFragment" />
+    </dialog>
 </navigation>
