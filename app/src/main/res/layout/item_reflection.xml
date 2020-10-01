@@ -8,6 +8,7 @@
     android:minHeight="?listPreferredItemHeightSmall"
     android:layout_margin="8dp"
     app:cardCornerRadius="10dp"
+    android:id="@+id/reflectionCard"
     >
     
     <androidx.constraintlayout.widget.ConstraintLayout

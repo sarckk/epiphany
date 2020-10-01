@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.reflection.detail.ReflectionDetailFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/reflectionDetailToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/dateCreated"
+            android:layout_width="340dp"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:text="Date Created" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="25dp"
+            app:cardCornerRadius="10dp"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:paddingVertical="10dp"
+                android:layout_width="340dp"
+                android:paddingHorizontal="30dp"
+                android:layout_height="match_parent"
+                >
+                <TextView
+                    android:id="@+id/wellBeingRatingDetailText"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:maxWidth="250dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wellbeing_question"
+                    android:textSize="18dp"
+                    />
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/wellBeingRatingDetailText"
+                    android:id="@+id/wellBeingRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:text="Wellbeing Rating"
+                    />
+            </RelativeLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="25dp"
+            app:cardCornerRadius="10dp"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="340dp"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="30dp"
+                android:layout_height="match_parent"
+                >
+                <TextView
+                    android:id="@+id/whatElseDetailText"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:maxWidth="250dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/what_else_question"
+                    android:textSize="18dp"
+                    />
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/whatElseDetailText"
+                    android:id="@+id/whatElseText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:text="What Else" />
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

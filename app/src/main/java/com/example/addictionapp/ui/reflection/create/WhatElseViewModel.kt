@@ -27,7 +27,7 @@ class WhatElseViewModel(
         val currentTime = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
         val formattedDate = formatter.format(currentTime)
-        val reflection = Reflection(formattedDate, "ok", whatElseText)
+        val reflection = Reflection(formattedDate, wellbeingState, whatElseText)
         reflectionRepository.upsertReflection(reflection)
         _newReflectionCreatedEvent.setValue(Unit)
     }

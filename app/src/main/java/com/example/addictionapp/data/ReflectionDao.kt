@@ -9,8 +9,8 @@ interface ReflectionDao{
     @Query("SELECT * FROM reflection_table ORDER BY date_created")
     suspend fun getAllReflections(): List<Reflection>
 
-    @Query("SELECT * FROM reflection_table WHERE date_created = :creationDate")
-    suspend fun getReflection(creationDate: String): Reflection
+    @Query("SELECT * FROM reflection_table WHERE date_created = :dateCreated")
+    suspend fun getReflection(dateCreated: String): Reflection
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(reflection: Reflection)

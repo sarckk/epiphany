@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.example.addictionapp.R
 import com.example.addictionapp.ui.MainActivity
-import com.example.addictionapp.ui.reflection.list.ReflectionListViewModel
 import kotlinx.android.synthetic.main.activity_create_reflection.*
 import kotlinx.android.synthetic.main.fragment_what_else.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -34,10 +32,10 @@ class WhatElseFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = "${getString(R.string.create_reflection_title)} (2/2)"
         (activity as AppCompatActivity).progressBar.setProgress(2, true)
 
-        bindUI()
+        bindUIToViewModel()
     }
 
-    private fun bindUI() {
+    private fun bindUIToViewModel() {
        submitReflection.setOnClickListener{
            if(editTextIsEmpty()){
                viewModel.addReflection(args.wellBeingState, null)

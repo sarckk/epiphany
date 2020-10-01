@@ -14,16 +14,12 @@ class CreateReflectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_reflection)
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
-        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.black))
-        setSupportActionBar(toolbar)
+        createReflectionToolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+        createReflectionToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.black))
+        setSupportActionBar(createReflectionToolbar)
         //supportActionBar!!.setTitle(R.string.create_reflection_title)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.create_reflection_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-    }
-
-    fun setActionBarTitle(title: String){
-        toolbar.title = title
     }
 }

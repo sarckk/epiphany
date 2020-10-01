@@ -12,5 +12,6 @@ data class Reflection (
     val dateCreated: String,
     @ColumnInfo(name="well_being_rating")
     val wellBeingRating: String,
-    val reflection: String?
+    @ColumnInfo(name="what_else_text")
+    val whatElseText: String?
 )

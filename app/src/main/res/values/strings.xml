@@ -1,8 +1,15 @@
 <resources>
-    <string name="app_name">epiphany</string>
+    <string name="app_name">Epiphany</string>
     <string name="create_reflection_title">Log your daily reflection</string>
-    <string name="accessibility_service_label">epiphany</string>
-    <string name="accessibility_service_description">I fucking hate kotlin</string>
+    <string name="accessibility_service_label">Epiphany</string>
+    <string name="accessibility_service_description">Your social media addiction managed</string>
+    <string name="wellbeing_question">How would you rate your overall well-being right now?</string>
+    <string name="what_else_question">What else could you have done in the time you spent? (Optional)</string>
+    <string name="very_good_opt">Very Good</string>
+    <string name="pretty_good_opt">Pretty Good</string>
+    <string name="ok_opt">Ok</string>
+    <string name="pretty_bad_opt">Pretty Bad</string>
+    <string name="very_bad_opt">Very Bad</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

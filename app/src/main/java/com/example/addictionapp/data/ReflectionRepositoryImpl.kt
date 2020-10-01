@@ -1,6 +1,7 @@
 package com.example.addictionapp.data
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import com.example.addictionapp.data.models.Reflection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -13,8 +14,8 @@ class ReflectionRepositoryImpl(
         return reflectionDao.getAllReflections()
     }
 
-    override suspend fun getReflection(creationDate: String): Reflection {
-        return reflectionDao.getReflection(creationDate)
+    override suspend fun getReflection(dateCreated: String): Reflection {
+        return reflectionDao.getReflection(dateCreated)
     }
 
     override suspend fun upsertReflection(reflection: Reflection) {

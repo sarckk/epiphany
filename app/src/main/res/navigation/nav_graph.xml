@@ -18,5 +18,9 @@
         android:id="@+id/reflectionDetailFragment"
         android:name="com.example.addictionapp.ui.reflection.detail.ReflectionDetailFragment"
         android:label="reflection_detail_fragment"
-        tools:layout="@layout/reflection_detail_fragment" />
+        tools:layout="@layout/fragment_reflection_detail" >
+        <argument
+            android:name="dateCreated"
+            app:argType="string" />
+    </fragment>
 </navigation>

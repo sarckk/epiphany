@@ -1,23 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
     android:orientation="vertical"
     tools:context=".ui.reflection.list.ReflectionListFragment">
+        <LinearLayout
+            android:id="@+id/loadingScreenLoadAll"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="match_parent">
+                <ProgressBar
+                    android:id="@+id/loadingProgressIndicator"
+                    android:indeterminateTint="@color/colorPrimaryDark"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:indeterminate="true"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/loadingProgressText"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:text="Loading reflection history"/>
+        </LinearLayout>
+
         <TextView
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textSize="21sp"
+            android:layout_marginTop="30dp"
+            android:textSize="23sp"
+            android:textColor="@color/black"
             android:text="Your reflection history" />
+
+        <ImageView
+            android:layout_marginTop="100dp"
+            android:id="@+id/noDataImg"
+            android:layout_width="267dp"
+            android:src="@drawable/ic_no_data"
+            android:layout_gravity="center"
+            android:layout_height="210dp"
+            />
+
+        <TextView
+            android:id="@+id/noDataText"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+                android:text="No reflections yet"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="10dp"
-            android:id="@+id/reflectionList"
+            android:id="@+id/reflectionRecyclerView"
             android:layout_width="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_height="0dp"

@@ -1,7 +1,9 @@
 package com.example.addictionapp.ui
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -14,10 +16,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val confirmationMessage = intent.getStringExtra("confirmation_msg")
-        if(confirmationMessage != null){
-           Toast.makeText(this, confirmationMessage, Toast.LENGTH_SHORT).show()
+        intent.getStringExtra("confirmation_msg")?.let{
+            val toast = Toast.makeText(this, it, Toast.LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM, 0, 210)
+            toast.show()
         }
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment

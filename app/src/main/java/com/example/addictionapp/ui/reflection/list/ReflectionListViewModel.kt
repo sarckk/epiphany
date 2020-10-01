@@ -9,23 +9,29 @@ class ReflectionListViewModel(
    private val reflectionRepository: ReflectionRepository
 ): ViewModel() {
 
+    /**
+    val reflectionList: LiveData<List<Reflection>> = liveData {
+    val reflectionList = reflectionRepository.getAllReflections()
+    _finishedFetching.value = true
+    emit(reflectionList)
+    }
+     init {
+    viewmodelscope.launch {
+    _reflectionlist.value = reflectionrepository.getallreflections()
+    _finishedfetching.value = true
+    }
+    }
+     **/
+
     private var _reflectionList = MutableLiveData<List<Reflection>>()
     val reflectionList : LiveData<List<Reflection>>
         get() = _reflectionList
 
-    companion object {
-        const val TAG = "REFLECTION_LIST_VIEW_MODEL"
-    }
+    private val _finishedFetching = MutableLiveData<Boolean>(false)
+    val finishedFetching: LiveData<Boolean> = _finishedFetching
 
-    init {
-        viewModelScope.launch {
-            _reflectionList.setValue(reflectionRepository.getAllReflections())
-        }
+    fun getReflections() = viewModelScope.launch {
+        _reflectionList.value = reflectionRepository.getAllReflections()
+        _finishedFetching.value = true
     }
-    /**
-    val reflectionList: LiveData<List<Reflection>> = liveData {
-        val reflectionList = reflectionRepository.getAllReflections()
-        emit(reflectionList)
-    }
-    **/
 }
