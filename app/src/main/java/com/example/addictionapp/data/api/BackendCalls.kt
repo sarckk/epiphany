@@ -1,7 +1,7 @@
-package com.example.addictionapp.api
+package com.example.addictionapp.data.api
 
 import android.util.Log
-import com.example.addictionapp.models.*
+import com.example.addictionapp.data.models.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

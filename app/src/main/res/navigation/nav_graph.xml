@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/reflectionListFragment">
+
+    <fragment
+        android:id="@+id/reflectionListFragment"
+        android:name="com.example.addictionapp.ui.reflection.list.ReflectionListFragment"
+        android:label="fragment_reflection_list"
+        tools:layout="@layout/fragment_reflection_list" >
+        <action
+            android:id="@+id/action_reflectionListFragment_to_reflectionDetailFragment"
+            app:destination="@id/reflectionDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reflectionDetailFragment"
+        android:name="com.example.addictionapp.ui.reflection.detail.ReflectionDetailFragment"
+        android:label="reflection_detail_fragment"
+        tools:layout="@layout/reflection_detail_fragment" />
+</navigation>

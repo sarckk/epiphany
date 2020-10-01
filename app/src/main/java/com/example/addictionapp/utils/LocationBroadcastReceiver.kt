@@ -3,8 +3,7 @@ package com.example.addictionapp.utils
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.getIntent
-import com.example.addictionapp.api.BackendCalls
+import com.example.addictionapp.data.api.BackendCalls
 import com.huawei.hms.location.ActivityIdentificationData
 import com.huawei.hms.location.ActivityIdentificationResponse
 

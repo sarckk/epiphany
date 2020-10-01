@@ -1,4 +1,4 @@
-package com.example.addictionapp.api;
+package com.example.addictionapp.data.api;
 
 public class BackendSingleton {
 

@@ -1,6 +1,6 @@
-package com.example.addictionapp.api;
+package com.example.addictionapp.data.api;
 
-import com.example.addictionapp.models.*
+import com.example.addictionapp.data.models.*
 import com.google.gson.GsonBuilder
 
 import java.util.HashMap;
@@ -10,7 +10,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 interface BackendService {

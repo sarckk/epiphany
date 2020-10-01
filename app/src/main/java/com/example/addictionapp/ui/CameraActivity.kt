@@ -1,4 +1,4 @@
-package com.example.addictionapp
+package com.example.addictionapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +7,7 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.example.addictionapp.R
 import kotlinx.android.synthetic.main.activity_camera.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
