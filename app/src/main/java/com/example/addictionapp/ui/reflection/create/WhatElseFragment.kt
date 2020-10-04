@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.example.addictionapp.R
-import com.example.addictionapp.ui.MainActivity
+import com.example.addictionapp.ui.reflection.list.ReflectionListActivity
 import kotlinx.android.synthetic.main.activity_create_reflection.*
 import kotlinx.android.synthetic.main.fragment_what_else.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -46,7 +46,7 @@ class WhatElseFragment : Fragment() {
 
         viewModel.newReflectionCreatedEvent.observe(viewLifecycleOwner, Observer {
             if(it.getContentIfNotHandled() != null){
-                val intent = Intent(this.context, MainActivity::class.java)
+                val intent = Intent(this.context, ReflectionListActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.putExtra("confirmation_msg", "Reflection successfully created")
                 startActivity(intent)

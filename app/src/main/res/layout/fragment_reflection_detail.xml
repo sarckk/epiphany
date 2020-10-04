@@ -5,11 +5,11 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.reflection.detail.ReflectionDetailFragment">
-
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/reflectionDetailToolbar"
+        android:id="@+id/detailToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         />
@@ -25,7 +25,7 @@
             android:layout_height="match_parent">
 
         <TextView
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25dp"
             android:id="@+id/dateCreated"
             android:layout_width="340dp"
             android:gravity="center_horizontal"

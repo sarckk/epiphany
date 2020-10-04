@@ -65,6 +65,10 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    // Permissions Dispatcher lib
+    implementation "org.permissionsdispatcher:permissionsdispatcher:4.8.0"
+    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:4.8.0"
+
     // koin
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-scope:$koin_version"

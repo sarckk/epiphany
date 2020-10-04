@@ -32,6 +32,9 @@ class ReflectionListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        listToolbarText.setText(R.string.app_name)
+        //listToolbar.setTitle(R.string.app_name)
+
         // launch new Activity when LOG btn clicked
         createReflectionBtn.setOnClickListener {
             val intent = Intent(this.context, CreateReflectionActivity::class.java)

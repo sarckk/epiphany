@@ -17,6 +17,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.addictionapp.R
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_reflection_detail.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -62,20 +63,23 @@ class ReflectionDetailFragment : Fragment(){
     }
 
     private fun setUpToolbar(){
-        reflectionDetailToolbar.setNavigationIcon(R.drawable.ic_back)
-        reflectionDetailToolbar.setNavigationOnClickListener() {
-            it.findNavController().navigateUp()
-        }
+        detailToolbar.let{
+            it.setTitle("Your reflection")
+            it.setNavigationIcon(R.drawable.ic_back)
+            it.setNavigationOnClickListener() {
+                findNavController().navigateUp()
+            }
 
-        reflectionDetailToolbar.inflateMenu(R.menu.menu_reflection_detail)
+            it.inflateMenu(R.menu.menu_reflection_detail)
 
-        reflectionDetailToolbar.setOnMenuItemClickListener {menuItem ->
-            when(menuItem.itemId) {
-                R.id.deleteReflection -> {
-                    askConfirmDelete()
-                    true
-                } else -> {
+            it.setOnMenuItemClickListener {menuItem ->
+                when(menuItem.itemId) {
+                    R.id.deleteReflection -> {
+                        askConfirmDelete()
+                        true
+                    } else -> {
                     super.onOptionsItemSelected(menuItem)
+                }
                 }
             }
         }

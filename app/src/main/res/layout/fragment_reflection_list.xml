@@ -3,9 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
+    android:padding="10dp"
     android:orientation="vertical"
     tools:context=".ui.reflection.list.ReflectionListFragment">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/listToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            >
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                        <ImageView
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="31dp"
+                            android:layout_height="31dp"
+                            android:src="@drawable/epiphany_logo"
+                            />
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            android:id="@+id/listToolbarText"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
         <LinearLayout
             android:id="@+id/loadingScreenLoadAll"
             android:layout_width="match_parent"
@@ -32,7 +59,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             android:textSize="23sp"
             android:textColor="@color/black"
             android:text="Your reflection history" />
