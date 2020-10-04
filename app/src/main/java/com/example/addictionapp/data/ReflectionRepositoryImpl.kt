@@ -1,16 +1,18 @@
 package com.example.addictionapp.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
 import com.example.addictionapp.data.models.Reflection
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 class ReflectionRepositoryImpl(
     private val reflectionDao: ReflectionDao
 ) : ReflectionRepository {
 
-    override suspend fun getAllReflections(): List<Reflection> {
+    override fun getAllReflections(): Flow<List<Reflection>> {
         return reflectionDao.getAllReflections()
     }
 

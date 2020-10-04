@@ -82,8 +82,8 @@ class ReflectionDetailFragment : Fragment(){
     }
 
     private fun bindUIToViewModel(){
-        viewModel.deletedSuccessfully.observe(viewLifecycleOwner, Observer {
-            if(it == true){
+        viewModel.navToListView.observe(viewLifecycleOwner, Observer {
+            if(it.getContentIfNotHandled() != null){
                 this@ReflectionDetailFragment.findNavController().navigateUp()
             }
         })

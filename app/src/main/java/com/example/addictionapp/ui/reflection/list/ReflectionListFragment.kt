@@ -6,19 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.addictionapp.R
 import com.example.addictionapp.data.models.Reflection
 import com.example.addictionapp.ui.reflection.create.CreateReflectionActivity
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import kotlinx.android.synthetic.main.fragment_reflection_detail.*
 import kotlinx.android.synthetic.main.fragment_reflection_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -42,8 +38,6 @@ class ReflectionListFragment : Fragment() {
             startActivity(intent)
         }
 
-        viewModel.getReflections()
-
         bindUIToViewModel()
     }
 
@@ -62,13 +56,13 @@ class ReflectionListFragment : Fragment() {
                 initRecycler(reflections)
             } else{
                noDataImg.visibility = View.VISIBLE
-                noDataText.visibility = View.VISIBLE
+               noDataText.visibility = View.VISIBLE
                reflectionRecyclerView.visibility = View.GONE
             }
         })
 
-        viewModel.finishedFetching.observe(viewLifecycleOwner, Observer {loaded ->
-            if(loaded == true){
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
+            if(!it){
                 loadingScreenLoadAll.visibility = View.GONE
             }
         })

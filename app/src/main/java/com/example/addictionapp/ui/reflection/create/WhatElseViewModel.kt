@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.addictionapp.data.ReflectionRepository
 import com.example.addictionapp.data.models.Reflection
+import com.example.addictionapp.utils.Event
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -15,8 +16,8 @@ class WhatElseViewModel(
     private val reflectionRepository: ReflectionRepository
 ): ViewModel() {
 
-    private val _newReflectionCreatedEvent = MutableLiveData<Unit>()
-    val newReflectionCreatedEvent: LiveData<Unit> = _newReflectionCreatedEvent
+    private val _newReflectionCreatedEvent = MutableLiveData<Event<Unit>>()
+    val newReflectionCreatedEvent: LiveData<Event<Unit>> = _newReflectionCreatedEvent
 
     companion object {
         const val TAG = "WHAT_ELSE_VIEW_MODEL"
@@ -29,6 +30,6 @@ class WhatElseViewModel(
         val formattedDate = formatter.format(currentTime)
         val reflection = Reflection(formattedDate, wellbeingState, whatElseText)
         reflectionRepository.upsertReflection(reflection)
-        _newReflectionCreatedEvent.setValue(Unit)
+        _newReflectionCreatedEvent.value = Event(Unit)
     }
 }

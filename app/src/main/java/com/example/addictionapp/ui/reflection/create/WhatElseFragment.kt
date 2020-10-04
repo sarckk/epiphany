@@ -45,10 +45,12 @@ class WhatElseFragment : Fragment() {
        }
 
         viewModel.newReflectionCreatedEvent.observe(viewLifecycleOwner, Observer {
-            val intent = Intent(this.context, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.putExtra("confirmation_msg", "Reflection successfully created")
-            startActivity(intent)
+            if(it.getContentIfNotHandled() != null){
+                val intent = Intent(this.context, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.putExtra("confirmation_msg", "Reflection successfully created")
+                startActivity(intent)
+            }
         })
     }
 
