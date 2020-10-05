@@ -10,7 +10,7 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.addictionapp.R
-import com.example.addictionapp.ui.reflection.list.ReflectionListActivity
+import com.example.addictionapp.ui.MainActivity
 import kotlinx.android.synthetic.main.activity_permissions.*
 
 class PermissionsActivity : AppCompatActivity(){
@@ -32,7 +32,7 @@ class PermissionsActivity : AppCompatActivity(){
         opsService.startWatchingMode(AppOpsManager.OPSTR_GET_USAGE_STATS, packageName, AppOpsManager.OnOpChangedListener{ op, packageName ->
             val permissionGranted =  opsService.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), packageName) == AppOpsManager.MODE_ALLOWED
             if(permissionGranted){
-                val gotoMain = Intent(this, ReflectionListActivity::class.java)
+                val gotoMain = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(gotoMain)
                 finish()

@@ -1,18 +1,13 @@
 package com.example.addictionapp.ui.splash
 
-import android.Manifest
 import android.app.AppOpsManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
+import com.example.addictionapp.ui.MainActivity
 import com.example.addictionapp.ui.permissions.PermissionsActivity
-import com.example.addictionapp.ui.reflection.list.ReflectionListActivity
-import org.koin.android.ext.android.get
 
 class SplashActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +33,7 @@ class SplashActivity: AppCompatActivity() {
     }
 
     private fun redirectToMain() {
-        val gotoMain = Intent(this, ReflectionListActivity::class.java)
+        val gotoMain = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         Log.d("TEST", "REDIRECT TO MAIN")
         startActivity(gotoMain)

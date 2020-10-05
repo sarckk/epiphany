@@ -8,10 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.addictionapp.R
-import com.example.addictionapp.ui.reflection.list.ReflectionListActivity
-import kotlinx.android.synthetic.main.activity_create_reflection.*
+import com.example.addictionapp.ui.MainActivity
+import kotlinx.android.synthetic.main.create_reflection_toolbar.*
 import kotlinx.android.synthetic.main.fragment_what_else.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -29,8 +30,8 @@ class WhatElseFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        (activity as AppCompatActivity).supportActionBar?.title = "${getString(R.string.create_reflection_title)} (2/2)"
-        (activity as AppCompatActivity).progressBar.setProgress(2, true)
+        createReflectionToolbar.title = "${getString(R.string.create_reflection_title)} (2/2)"
+        createReflectionProgress.setProgress(2, true)
 
         bindUIToViewModel()
     }
@@ -46,10 +47,8 @@ class WhatElseFragment : Fragment() {
 
         viewModel.newReflectionCreatedEvent.observe(viewLifecycleOwner, Observer {
             if(it.getContentIfNotHandled() != null){
-                val intent = Intent(this.context, ReflectionListActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                intent.putExtra("confirmation_msg", "Reflection successfully created")
-                startActivity(intent)
+                val action = WhatElseFragmentDirections.actionWhatElseFragmentToReflectionListFragment("Reflection successfully created")
+                findNavController().navigate(action)
             }
         })
     }

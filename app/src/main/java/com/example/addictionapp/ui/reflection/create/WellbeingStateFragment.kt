@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.addictionapp.R
 import com.example.addictionapp.utils.Constants
-import kotlinx.android.synthetic.main.activity_create_reflection.*
+import kotlinx.android.synthetic.main.create_reflection_toolbar.*
 import kotlinx.android.synthetic.main.fragment_wellbeing_state.*
 
 class WellbeingStateFragment : Fragment() {
@@ -24,36 +25,36 @@ class WellbeingStateFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        (activity as AppCompatActivity).supportActionBar?.title = "${getString(R.string.create_reflection_title)} (1/2)"
-        (activity as AppCompatActivity).progressBar.setProgress(1, true)
+        createReflectionToolbar.title = "${getString(R.string.create_reflection_title)} (1/2)"
+        createReflectionProgress.setProgress(1, true)
 
         bindUI()
     }
 
     private fun bindUI() {
         veryGoodOption.setOnClickListener{
-            navigateToNextQuestion(Constants.VERY_GOOD, it)
+            navigateToNextQuestion(Constants.VERY_GOOD)
         }
 
         prettyGoodOption.setOnClickListener{
-            navigateToNextQuestion(Constants.PRETTY_GOOD, it)
+            navigateToNextQuestion(Constants.PRETTY_GOOD)
         }
 
         okOption.setOnClickListener{
-            navigateToNextQuestion(Constants.OK, it)
+            navigateToNextQuestion(Constants.OK)
         }
 
         prettyBadOption.setOnClickListener{
-            navigateToNextQuestion(Constants.PRETTY_BAD,it)
+            navigateToNextQuestion(Constants.PRETTY_BAD)
         }
 
         veryBadOption.setOnClickListener{
-            navigateToNextQuestion(Constants.VERY_BAD, it)
+            navigateToNextQuestion(Constants.VERY_BAD)
         }
     }
 
-    private fun navigateToNextQuestion(wellBeingScore: String, view: View){
+    private fun navigateToNextQuestion(wellBeingScore: String){
         val action = WellbeingStateFragmentDirections.actionWellbeingStateFragmentToWhatElseFragment(wellBeingScore)
-        view.findNavController().navigate(action)
+        findNavController().navigate(action)
     }
 }

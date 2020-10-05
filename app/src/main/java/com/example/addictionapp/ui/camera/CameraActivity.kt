@@ -1,4 +1,4 @@
-package com.example.addictionapp.ui
+package com.example.addictionapp.ui.camera
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

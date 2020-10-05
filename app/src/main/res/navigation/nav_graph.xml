@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/reflectionListFragment">
+    app:startDestination="@id/overviewFragment">
 
     <fragment
         android:id="@+id/reflectionListFragment"
@@ -13,6 +13,13 @@
         <action
             android:id="@+id/action_reflectionListFragment_to_reflectionDetailFragment"
             app:destination="@id/reflectionDetailFragment" />
+        <action
+            android:id="@+id/action_reflectionListFragment_to_wellbeingStateFragment"
+            app:destination="@id/wellbeingStateFragment" />
+        <argument
+            android:name="confirmationMsg"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/reflectionDetailFragment"
@@ -31,10 +38,37 @@
         android:name="com.example.addictionapp.ui.reflection.detail.ReflectionConfirmDeleteDialogFragment"
         android:label="ReflectionConfirmDeleteDialogFragment" >
         <action
-            android:id="@+id/action_reflectionConfirmDeleteDialogFragment_to_reflectionListFragment"
-            app:destination="@id/reflectionListFragment" />
-        <action
             android:id="@+id/action_reflectionConfirmDeleteDialogFragment_to_reflectionDetailFragment"
             app:destination="@id/reflectionDetailFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/overviewFragment"
+        android:name="com.example.addictionapp.ui.overview.OverviewFragment"
+        android:label="OverviewFragment" >
+        <action
+            android:id="@+id/action_overviewFragment_to_reflectionListFragment"
+            app:destination="@id/reflectionListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wellbeingStateFragment"
+        android:name="com.example.addictionapp.ui.reflection.create.WellbeingStateFragment"
+        android:label="fragment_wellbeing_state"
+        tools:layout="@layout/fragment_wellbeing_state" >
+        <action
+            android:id="@+id/action_wellbeingStateFragment_to_whatElseFragment"
+            app:destination="@id/whatElseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/whatElseFragment"
+        android:name="com.example.addictionapp.ui.reflection.create.WhatElseFragment"
+        android:label="WhatElseFragment">
+        <argument
+            android:name="wellBeingState"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_whatElseFragment_to_reflectionListFragment"
+            app:popUpTo="@id/reflectionListFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/reflectionListFragment" />
+    </fragment>
 </navigation>

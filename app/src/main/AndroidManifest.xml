@@ -41,14 +41,12 @@
         </activity>
         <activity android:name=".ui.permissions.PermissionsActivity">
         </activity>
-        <activity android:name=".ui.reflection.list.ReflectionListActivity">
-        </activity>
-        <activity android:name=".ui.reflection.create.CreateReflectionActivity">
+        <activity android:name=".ui.MainActivity">
         </activity>
 
 
         <!-- From hackzurich -->
-        <activity android:name=".ui.CameraActivity">
+        <activity android:name=".ui.camera.CameraActivity">
             <intent-filter>
                 <action android:name="com.example.addictionapp" />
 

@@ -6,19 +6,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.addictionapp.R
 import com.example.addictionapp.data.models.Reflection
-import com.example.addictionapp.ui.reflection.create.CreateReflectionActivity
+import com.example.addictionapp.ui.reflection.detail.ReflectionDetailFragmentArgs
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_reflection_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ReflectionListFragment : Fragment() {
+    private val args: ReflectionListFragmentArgs by navArgs()
     private val viewModel by viewModel<ReflectionListViewModel>()
 
     override fun onCreateView(
@@ -32,16 +36,39 @@ class ReflectionListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        listToolbarText.setText(R.string.app_name)
-        //listToolbar.setTitle(R.string.app_name)
+        if(args.confirmationMsg != null){
+            Toast.makeText(context, args.confirmationMsg, Toast.LENGTH_SHORT).show()
+        }
+
+        /**
+        intent.getStringExtra("confirmation_msg")?.let{
+            intent.removeExtra("confirmation_msg")
+            val toast = Toast.makeText(this, it, Toast.LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM, 0, 210)
+            toast.show()
+        }
+        **/
+
+        setUpToolbar()
 
         // launch new Activity when LOG btn clicked
         createReflectionBtn.setOnClickListener {
-            val intent = Intent(this.context, CreateReflectionActivity::class.java)
-            startActivity(intent)
+            val action = ReflectionListFragmentDirections.actionReflectionListFragmentToWellbeingStateFragment()
+            Log.d("TEST", "HERE")
+            findNavController().navigate(action)
         }
 
         bindUIToViewModel()
+    }
+
+    private fun setUpToolbar(){
+        listToolbar.let{
+            it.setNavigationIcon(R.drawable.ic_back)
+            it.setNavigationOnClickListener() {
+                findNavController().navigateUp()
+            }
+            it.title = "Your reflection history"
+        }
     }
 
     private fun bindUIToViewModel() {
@@ -56,7 +83,7 @@ class ReflectionListFragment : Fragment() {
             if(reflections.isNotEmpty()){
                 noDataImg.visibility = View.GONE
                 noDataText.visibility = View.GONE
-                initRecycler(reflections)
+                updateRecycler(reflections)
             } else{
                noDataImg.visibility = View.VISIBLE
                noDataText.visibility = View.VISIBLE
@@ -71,7 +98,8 @@ class ReflectionListFragment : Fragment() {
         })
     }
 
-    private fun initRecycler(reflectionList: List<Reflection>) {
+
+    private fun updateRecycler(reflectionList: List<Reflection>) {
         val reflectionListItems = reflectionList.toReflectionItem()
         val groupieAdapter = GroupAdapter<GroupieViewHolder>().apply{
             spanCount = 2

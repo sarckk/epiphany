@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Progress bar below toolbar layout by https://github.com/adrianseraspi12 -->
+<com.google.android.material.appbar.AppBarLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:background="@color/transparent"
+            android:id="@+id/createReflectionToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+            <ProgressBar
+                android:id="@+id/createReflectionProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:indeterminate="false"
+                android:layout_alignParentBottom="true"
+                android:progressTint="@color/colorPrimary"
+                android:max="2"
+                android:progress="1"
+                />
+    </RelativeLayout>
+</com.google.android.material.appbar.AppBarLayout>
