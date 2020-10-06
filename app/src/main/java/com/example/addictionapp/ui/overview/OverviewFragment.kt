@@ -1,5 +1,8 @@
 package com.example.addictionapp.ui.overview
 
+import android.app.Notification
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

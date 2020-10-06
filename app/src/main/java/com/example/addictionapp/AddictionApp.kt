@@ -2,6 +2,9 @@ package com.example.addictionapp
 
 import android.app.Activity
 import android.app.Application
+import android.app.Notification
+import android.app.PendingIntent
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import org.koin.android.ext.koin.androidContext

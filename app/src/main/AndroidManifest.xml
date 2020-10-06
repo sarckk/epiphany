@@ -8,6 +8,7 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="com.huawei.hms.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -41,6 +42,8 @@
         </activity>
         <activity android:name=".ui.permissions.PermissionsActivity">
         </activity>
+        <activity android:name=".ui.apps.AppSelectionActivity">
+        </activity>
         <activity android:name=".ui.MainActivity">
         </activity>
 
@@ -73,6 +76,11 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_config" />
         </service>
+
+        <service
+            android:name=".services.AppTrackingService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

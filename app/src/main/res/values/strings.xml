@@ -11,6 +11,9 @@
     <string name="pretty_bad_opt">Pretty Bad</string>
     <string name="very_bad_opt">Very Bad</string>
     <string name="usage_permission_text">
-        "Epiphany needs access to your phone usage data to track social media use. Please enable it to proceed."
+        "Epiphany needs to work in the background as well as access to your phone usage data to track social media use. Please enable it to proceed."
     </string>
+    <string name="front_notif_name">Epiphany is running</string>
+    <string name="front_notif_description">Epiphany is monitoring your social media use.</string>
+    <string name="ticker_text">To fill!</string>
 </resources>
