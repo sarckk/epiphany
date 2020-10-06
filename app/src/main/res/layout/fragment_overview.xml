@@ -5,19 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     android:orientation="vertical"
     >
 
     <androidx.appcompat.widget.Toolbar
+        android:layout_margin="10dp"
         android:id="@+id/overviewToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
+        app:contentInsetStart="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -41,21 +43,19 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <!--
-    <com.robinhood.spark.SparkView
-        android:id="@+id/sparkView"
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="5dp"
+        android:id="@+id/overviewChart"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        app:spark_lineColor="@color/colorPrimaryDark"
-        app:spark_cornerRadius="15dp"
-        app:spark_scrubEnabled="true"
-        android:layout_marginHorizontal="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/overviewToolbar"
-        app:layout_constraintBottom_toTopOf="@id/textView3"
-        />
-        -->
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/overviewInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/overviewToolbar" />
 
     <Button
+        android:layout_margin="10dp"
         android:id="@+id/test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,9 +65,10 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:padding="10dp"
+        android:id="@+id/overviewInfo"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="320dp"
         android:gravity="center"
         android:text="TextView"
         android:textSize="20sp"

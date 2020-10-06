@@ -4,6 +4,7 @@ buildscript {
         google()
         jcenter()
         maven {url 'https://developer.huawei.com/repo/'}
+        maven {url 'https://jitpack.io'}
     }
     dependencies {
         def koin_version = '2.1.6'
@@ -23,6 +24,7 @@ allprojects {
         google()
         jcenter()
         maven {url 'https://developer.huawei.com/repo/'}
+        maven {url 'https://jitpack.io'}
     }
 }
 

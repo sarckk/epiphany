@@ -56,6 +56,7 @@ dependencies {
     def room_version = "2.2.5"
     def koin_version = '2.1.6'
 
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
@@ -64,9 +65,8 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    // Permissions Dispatcher lib
-    implementation "org.permissionsdispatcher:permissionsdispatcher:4.8.0"
-    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:4.8.0"
+    //mpandroidchart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     // koin
     implementation "org.koin:koin-android:$koin_version"
