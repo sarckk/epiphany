@@ -7,3 +7,5 @@ object Constants {
    const val PRETTY_BAD  = "Pretty Bad"
    const val VERY_BAD = "Very Bad"
 }
+
+

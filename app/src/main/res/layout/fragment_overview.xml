@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
+    app:layoutDescription="@xml/fragment_overview_scene">
 
     <androidx.appcompat.widget.Toolbar
-        android:layout_margin="10dp"
         android:id="@+id/overviewToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10dp"
         app:contentInsetStart="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
@@ -43,37 +42,78 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <com.github.mikephil.charting.charts.LineChart
+    <RadioGroup
         android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="5dp"
+        app:layout_constraintBottom_toTopOf="@id/overviewChart"
+        app:layout_constraintTop_toBottomOf="@id/overviewToolbar"
+        android:id="@+id/radioGrp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        >
+        <RadioButton
+            android:id="@+id/radioWeekly"
+            style="@style/overviewRadioStyle"
+            android:checked="true"
+            android:text="Weekly"
+            />
+        <RadioButton
+            android:id="@+id/radioMonthly"
+            style="@style/overviewRadioStyle"
+            android:text="Monthly"
+            />
+    </RadioGroup>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_marginBottom="10dp"
         android:id="@+id/overviewChart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="1dp"
         app:layout_constraintBottom_toTopOf="@id/overviewInfo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/overviewToolbar" />
+        app:layout_constraintTop_toBottomOf="@id/radioGrp" />
+
+    <LinearLayout
+        android:id="@+id/overviewInfo"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/test"
+        >
+        <TextView
+            android:id="@+id/overviewInfoDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="October 1, 2020"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-black"
+            />
+        <TextView
+            android:id="@+id/overviewReflection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="Reflection data here"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
 
     <Button
-        android:layout_margin="10dp"
         android:id="@+id/test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="toreflectionlist"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:padding="10dp"
-        android:id="@+id/overviewInfo"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:gravity="center"
-        android:text="TextView"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/test"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

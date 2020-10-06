@@ -7,6 +7,7 @@ import com.example.addictionapp.data.blocklist.BlocklistDatabase
 import com.example.addictionapp.data.blocklist.BlocklistRepository
 import com.example.addictionapp.data.blocklist.BlocklistRepositoryImpl
 import com.example.addictionapp.ui.apps.AppSelectionViewModel
+import com.example.addictionapp.ui.overview.OverviewViewModel
 import com.example.addictionapp.ui.reflection.create.WhatElseViewModel
 import com.example.addictionapp.ui.reflection.detail.ReflectionDetailViewModel
 import com.example.addictionapp.ui.reflection.list.ReflectionListViewModel
@@ -22,7 +23,7 @@ val appModule = module {
     single { get<BlocklistDatabase>().blocklistDao() }
     single<ReflectionRepository> { ReflectionRepositoryImpl(get()) }
     single<BlocklistRepository> { BlocklistRepositoryImpl(get()) }
-
+    viewModel { OverviewViewModel() }
     viewModel { ReflectionListViewModel(get()) }
     viewModel { ReflectionDetailViewModel(get()) }
     viewModel { WhatElseViewModel(get()) }

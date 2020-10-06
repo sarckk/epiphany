@@ -10,8 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.addictionapp.R
+import com.example.addictionapp.data.ReflectionRepository
+import com.example.addictionapp.data.models.Reflection
+import com.example.addictionapp.ui.reflection.list.ReflectionListViewModel
+import com.example.addictionapp.utils.ChartModeEnum
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -21,8 +26,13 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.Utils
 import kotlinx.android.synthetic.main.fragment_overview.*
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
 
 class OverviewFragment : Fragment(), OnChartValueSelectedListener {
+    private val viewModel by viewModel<OverviewViewModel>()
+
     companion object {
        private const val TAG = "OverviewFragment"
     }
@@ -38,13 +48,29 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        setUpRadioListeners()
         setUpToolbar()
         setUpLineChart()
+        bindChartToViewModel()
+    }
 
-        // TODO: Remove before production
-        test.setOnClickListener {
-            findNavController().navigate(OverviewFragmentDirections.actionOverviewFragmentToReflectionListFragment(null))
+    private fun setUpRadioListeners(){
+        radioGrp.setOnCheckedChangeListener { _, checkedId ->
+            val chartMode = when(checkedId){
+                R.id.radioWeekly -> ChartModeEnum.WEEKLY
+                R.id.radioMonthly ->  ChartModeEnum.MONTHLY
+                else -> ChartModeEnum.WEEKLY
+            }
+            viewModel.setChartMode(chartMode)
         }
+    }
+
+    private fun bindChartToViewModel(){
+        viewModel.chartLineData.observe(viewLifecycleOwner, Observer {
+            if(it != null){
+              setNewData(it, viewModel.overViewChartMode.value!!)
+            }
+        })
     }
 
     private fun setUpToolbar() {
@@ -52,30 +78,48 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
         overviewToolbar.inflateMenu(R.menu.menu_overview)
     }
 
-    private fun setUpMockData(): LineData {
-        // TODO: Move this conditional to actual implementation
-        /**
-        if(overviewChart.data?.dataSetCount!! > 0){
+    private fun setNewData (newValues: List<Entry>, chartMode: ChartModeEnum) {
+        // TODO: Add license for MPAndroidChart
+        var lineDataSet: LineDataSet
+
+        if(overviewChart.data != null && overviewChart.data.dataSetCount > 0){
             lineDataSet = overviewChart.data.getDataSetByIndex(0) as LineDataSet
-            lineDataSet.setValues(newValues)
+            lineDataSet = setLineDataSetStyle(lineDataSet,  chartMode)
+            lineDataSet.values = newValues
             lineDataSet.notifyDataSetChanged()
+            setChartXAXisStyle(chartMode)
+
+            if(overviewChart.highlighted != null && overviewChart.highlighted[0] != null){
+               overviewChart.highlightValue(overviewChart.highlighted[0], true)
+            } else{
+               overviewChart.highlightValue(newValues[0].x,newValues[0].y,0,true)
+            }
+
             overviewChart.data.notifyDataChanged()
             overviewChart.notifyDataSetChanged()
-        }
-        **/
-        // TODO: Replace with actual db data before production
-        // TODO: Add license for MPAndroidChart
-        val mockEntries = (0..6).map {
-            Entry(it.toFloat(), (1..100).random().toFloat())
-        }
+        } else {
+            lineDataSet = LineDataSet(newValues, "mock${chartMode}Data")
+            lineDataSet= setLineDataSetStyle(lineDataSet, chartMode)
+            val dataSets = arrayListOf<ILineDataSet>()
+            dataSets.add(lineDataSet)
+            setChartXAXisStyle(chartMode)
+            overviewChart.data = LineData(dataSets)
 
-        val lineDataSet = LineDataSet(mockEntries, "mockLineDataSet").apply {
+            overviewChart.highlightValue(newValues[0].x, newValues[0].y, 0)
+        }
+        overviewChart.animateY(800)
+    }
+
+    private fun setLineDataSetStyle(lineDataSet: LineDataSet, chartMode: ChartModeEnum): LineDataSet{
+        return lineDataSet.apply{
             setDrawCircleHole(true)
             lineWidth = 1.3f
             setDrawValues(false)
             color = R.color.epiphanyPurple
             setCircleColor(R.color.epiphanyPurple)
             mode = LineDataSet.Mode.CUBIC_BEZIER
+            setDrawHorizontalHighlightIndicator(false)
+            highlightLineWidth = 1.2f
 
             // gradient fill
             setDrawFilled(true)
@@ -86,9 +130,20 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
                 fillColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
             }
         }
-        val dataSets = arrayListOf<ILineDataSet>()
-        dataSets.add(lineDataSet)
-        return LineData(dataSets)
+    }
+
+    private fun setChartXAXisStyle( chartMode: ChartModeEnum ){
+        if(chartMode == ChartModeEnum.WEEKLY){
+            overviewChart.xAxis.run {
+                valueFormatter = DayOfWeekFormatter()
+                setLabelCount(7,true)
+            }
+        } else {
+            overviewChart.xAxis.run {
+                valueFormatter = null
+                setLabelCount(5,true)
+            }
+        }
     }
 
     private fun setUpLineChart(){
@@ -104,28 +159,29 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
             axisLeft.isEnabled = false
             axisRight.isEnabled = false
 
-            // xAxis
-            xAxis.isEnabled = true
-            xAxis.yOffset = 10f
-            xAxis.setDrawAxisLine(false)
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.setDrawGridLines(false)
-            xAxis.valueFormatter = DayOfWeekFormatter()
-
             description.isEnabled = false
             legend.isEnabled = false
 
-            // lastly, set data
-            data = setUpMockData()
+            // xAxis
+            xAxis.run {
+                isEnabled = true
+                yOffset = 2f
+                setDrawAxisLine(false)
+                position = XAxis.XAxisPosition.BOTTOM
+                setDrawGridLines(false)
+            }
 
-            // animate calls invalidate()
-            animateY(1000)
+            // animate calls invalidate() internally
+            animateY(800)
         }
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        Log.d(TAG, e.toString())
-        Log.d(TAG, h.toString())
+        val formatter = SimpleDateFormat("dd MMMM yyyy")
+        val data = e?.data as PlaceHolderData?
+        overviewInfoDate.text = formatter.format(data?.date)
+        // this should be a link to the reflection using navigation component and passing in the primary key as argument
+        overviewReflection.text = data?.reflection?.dateCreated
     }
 
     override fun onNothingSelected() {
