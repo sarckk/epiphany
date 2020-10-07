@@ -9,17 +9,22 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.example.addictionapp.R
 import com.example.addictionapp.data.blocklist.BlocklistRepository
-import com.example.addictionapp.data.blocklist.BlocklistRepositoryImpl
+import org.koin.android.ext.android.inject
 
 class AppTrackingService : Service() {
     private val CHANNEL_ID = "Epiphany"
-    private val tracker = AppTracker()
+    private val repo: BlocklistRepository by inject()
 
-    class AppTracker: Thread() {
+    class AppTracker(repo: BlocklistRepository): Thread() {
+
+        val applicationsPackageNames = repo.getAllBlacklistedApps().map {
+            it.packageName
+        }
+
         override fun run() {
+
             while (true) {
                 val usageEvents = usageStatsManager.queryEvents(System.currentTimeMillis() - 5000, System.currentTimeMillis())
 
@@ -27,7 +32,9 @@ class AppTrackingService : Service() {
                     var event: UsageEvents.Event = UsageEvents.Event()
                     val success = usageEvents.getNextEvent(event)
                     if (success) {
-                        Log.d("Epiphany", event.packageName)
+                        Log.d("Epiphany",
+                            applicationsPackageNames.contains(event.packageName).toString()
+                        )
                     }
                 }
 
@@ -67,6 +74,7 @@ class AppTrackingService : Service() {
             .setTicker(getText(R.string.ticker_text))
             .build()
 
+        val tracker = AppTracker(repo)
         tracker.start()
 
         startForeground(1, notification)
