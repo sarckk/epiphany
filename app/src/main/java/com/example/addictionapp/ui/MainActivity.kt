@@ -6,6 +6,7 @@ import android.content.ServiceConnection
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.Gravity
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,10 @@ import com.example.addictionapp.R
 import com.example.addictionapp.services.AppTrackingService
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        AppTrackingService.stopService(this)
         super.onDestroy()
     }
 
