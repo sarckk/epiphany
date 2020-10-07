@@ -23,7 +23,7 @@ val appModule = module {
     single { get<BlocklistDatabase>().blocklistDao() }
     single<ReflectionRepository> { ReflectionRepositoryImpl(get()) }
     single<BlocklistRepository> { BlocklistRepositoryImpl(get()) }
-    viewModel { OverviewViewModel() }
+    viewModel { OverviewViewModel(get()) }
     viewModel { ReflectionListViewModel(get()) }
     viewModel { ReflectionDetailViewModel(get()) }
     viewModel { WhatElseViewModel(get()) }

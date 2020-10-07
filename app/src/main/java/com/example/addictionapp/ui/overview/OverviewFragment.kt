@@ -2,6 +2,8 @@ package com.example.addictionapp.ui.overview
 
 import android.app.Notification
 import android.app.PendingIntent
+import android.app.usage.UsageStatsManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,9 +14,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.addictionapp.R
 import com.example.addictionapp.data.ReflectionRepository
+import com.example.addictionapp.data.models.ApplicationWithIcon
 import com.example.addictionapp.data.models.Reflection
+import com.example.addictionapp.ui.apps.AppSelectionItem
 import com.example.addictionapp.ui.reflection.list.ReflectionListViewModel
 import com.example.addictionapp.utils.ChartModeEnum
 import com.github.mikephil.charting.components.XAxis
@@ -25,6 +30,8 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.Utils
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_overview.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -48,6 +55,7 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel.setStatsManager(context?.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager)
         setUpRadioListeners()
         setUpToolbar()
         setUpLineChart()
@@ -181,10 +189,33 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
         val data = e?.data as PlaceHolderData?
         overviewInfoDate.text = formatter.format(data?.date)
         // this should be a link to the reflection using navigation component and passing in the primary key as argument
-        overviewReflection.text = data?.reflection?.dateCreated
+        data?.appData?.let { updateRecycler(it) }
+    }
+
+    private fun updateRecycler(applications: List<AppUsageData>) {
+        val applicationListItems = applications.toApplicationItem()
+
+        val groupieAdapter = GroupAdapter<GroupieViewHolder>().apply {
+            spanCount = 1
+
+            addAll(applicationListItems)
+        }
+
+        applicationUsageRecyclerView.apply {
+            layoutManager = GridLayoutManager(context, groupieAdapter.spanCount).apply{
+                spanSizeLookup = groupieAdapter.spanSizeLookup
+            }
+            adapter = groupieAdapter
+        }
     }
 
     override fun onNothingSelected() {
         Log.d(TAG, "Nothing selected")
+    }
+
+    private fun List<AppUsageData>.toApplicationItem() : List<AppUsageItem> {
+        return this.map { application ->
+            AppUsageItem(application)
+        }
     }
 }

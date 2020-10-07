@@ -1,9 +1,13 @@
 package com.example.addictionapp.ui.overview
 
-import com.example.addictionapp.data.models.Reflection
 import java.util.*
+
+data class AppUsageData(
+   val name: String,
+   val time: Long
+)
 
 data class PlaceHolderData(
    val date: Date,
-   val reflection: Reflection
+   val appData: List<AppUsageData>
 )

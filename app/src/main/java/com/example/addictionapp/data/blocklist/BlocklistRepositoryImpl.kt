@@ -11,6 +11,14 @@ class BlocklistRepositoryImpl(
         return blocklistDao.getAllBlacklistedApps()
     }
 
+    override fun getBlacklistedAppNameByPackageName(packageName: String): String {
+        return blocklistDao.getBlacklistedAppNameByPackageName(packageName)
+    }
+
+    override fun getAllBlacklistedPackageNames(): List<String> {
+        return blocklistDao.getAllBlacklistedPackageNames()
+    }
+
     override suspend fun upsertApplication(application: com.example.addictionapp.data.models.Application) {
         return blocklistDao.upsert(application)
     }
