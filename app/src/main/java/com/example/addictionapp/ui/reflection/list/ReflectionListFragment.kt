@@ -24,6 +24,13 @@ class ReflectionListFragment : Fragment() {
     private val args: ReflectionListFragmentArgs by navArgs()
     private val viewModel by viewModel<ReflectionListViewModel>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if(args.confirmationMsg != null){
+            Toast.makeText(context, args.confirmationMsg, Toast.LENGTH_SHORT).show()
+        }
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,12 +41,6 @@ class ReflectionListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
-        if(args.confirmationMsg != null){
-            Toast.makeText(context, args.confirmationMsg, Toast.LENGTH_SHORT).show()
-        }
-
 
         /**
         intent.getStringExtra("confirmation_msg")?.let{

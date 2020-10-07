@@ -1,8 +1,5 @@
 package com.example.addictionapp.ui.overview
 
-import android.app.Notification
-import android.app.PendingIntent
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,11 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.example.addictionapp.R
-import com.example.addictionapp.data.ReflectionRepository
-import com.example.addictionapp.data.models.Reflection
-import com.example.addictionapp.ui.reflection.list.ReflectionListViewModel
 import com.example.addictionapp.utils.ChartModeEnum
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -26,7 +19,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.Utils
 import kotlinx.android.synthetic.main.fragment_overview.*
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 

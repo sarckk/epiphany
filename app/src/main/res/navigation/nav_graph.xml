@@ -15,7 +15,8 @@
             app:destination="@id/reflectionDetailFragment" />
         <action
             android:id="@+id/action_reflectionListFragment_to_wellbeingStateFragment"
-            app:destination="@id/wellbeingStateFragment" />
+            app:destination="@id/wellbeingStateFragment"
+            app:enterAnim="@anim/slide_up" />
         <argument
             android:name="confirmationMsg"
             app:argType="string"
