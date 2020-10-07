@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".ui.reflection.list.ReflectionListFragment">
+    tools:context=".ui.reflection.list.ReflectionListFragment"
+    app:layoutDescription="@xml/fragment_suggestions_scene">
 
     <LinearLayout
         android:id="@+id/suggestionsLoadingScreen"
@@ -33,23 +35,47 @@
     </LinearLayout>
 
     <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/suggestionHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="Activities suggested by you"
+        android:text="Activities suggested by you, for you"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/suggestionDescription"
+        app:layout_constraintTop_toBottomOf="@+id/suggestionHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="7dp"
+        android:text="@string/suggestion_explanation"
+        android:maxWidth="250dp"
+        android:gravity="center"
+        android:textSize="12sp" />
 
     <ImageView
+        app:layout_constraintTop_toBottomOf="@id/suggestionDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/noSuggestionImg"
         android:layout_width="267dp"
         android:layout_height="210dp"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="95dp"
         android:src="@drawable/ic_suggestions" />
 
     <TextView
+        app:layout_constraintTop_toBottomOf="@+id/noSuggestionImg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/noSuggestionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,9 +83,12 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="15dp"
         android:text="No suggestions yet"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@+id/suggestionDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/suggestionRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -69,6 +98,9 @@
         tools:visibility="gone" />
 
     <Button
+        app:layout_constraintTop_toBottomOf="@+id/noSuggestionText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/createSuggestionBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,4 +108,5 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:text="suggest an activity" />
-</LinearLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
+

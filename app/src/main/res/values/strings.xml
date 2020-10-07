@@ -26,4 +26,7 @@
     <string name="suggestion_explanation">
         "Epiphany uses these suggestions and other factors to curate a list of activities suited just for you"
     </string>
+    <string name="reflection_explanation">
+        "Daily reflection provide a window into your mind and emotion while you are browsing your phone"
+    </string>
 </resources>

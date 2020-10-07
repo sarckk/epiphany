@@ -39,7 +39,18 @@
         android:layout_marginTop="20dp"
         android:text="Your reflection history"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/suggestionDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="7dp"
+        android:text="@string/reflection_explanation"
+        android:maxWidth="250dp"
+        android:gravity="center"
+        android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/noDataImg"
@@ -57,7 +68,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="15dp"
         android:text="No reflections yet"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reflectionRecyclerView"
