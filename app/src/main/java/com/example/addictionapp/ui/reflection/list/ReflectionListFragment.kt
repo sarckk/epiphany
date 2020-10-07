@@ -15,7 +15,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.addictionapp.R
 import com.example.addictionapp.data.models.Reflection
-import com.example.addictionapp.ui.reflection.detail.ReflectionDetailFragmentArgs
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_reflection_list.*
@@ -36,9 +35,11 @@ class ReflectionListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
         if(args.confirmationMsg != null){
             Toast.makeText(context, args.confirmationMsg, Toast.LENGTH_SHORT).show()
         }
+
 
         /**
         intent.getStringExtra("confirmation_msg")?.let{

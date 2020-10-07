@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -28,11 +29,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setUpToolbar()
-        setUpBottomNav()
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+
+        setUpBottomNav()
+        setUpToolbar()
 
         AppTrackingService.startService(this)
     }
@@ -45,6 +47,34 @@ class MainActivity : AppCompatActivity() {
     private fun setUpToolbar() {
         main_toolbar_text.setText(R.string.app_name)
         main_toolbar.inflateMenu(R.menu.menu_overview)
+        setUpFragmentToolbarVariants()
+    }
+
+    private fun setUpFragmentToolbarVariants(){
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when(destination.id){
+               R.id.reflectionDetailFragment -> {
+                   main_toolbar.visibility = View.GONE
+               }
+                R.id.wellbeingStateFragment -> {
+                    main_toolbar.visibility = View.GONE
+                    main_bottom_nav.visibility = View.GONE
+                }
+                R.id.whatElseFragment -> {
+                    main_toolbar.visibility = View.GONE
+                    main_bottom_nav.visibility = View.GONE
+                }
+                R.id.reflectionConfirmDeleteDialogFragment -> {
+                    main_toolbar.visibility = View.GONE
+                    main_bottom_nav.visibility = View.GONE
+                }
+                else -> {
+                    main_toolbar.visibility = View.VISIBLE
+                    main_bottom_nav.visibility = View.VISIBLE
+                }
+            }
+        }
+
     }
 
     private fun setUpBottomNav(){
