@@ -29,18 +29,17 @@
                     android:text="Loading reflection history"/>
         </LinearLayout>
 
-        <!--
         <TextView
+            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
             android:textColor="@color/black"
             android:text="Your reflection history" />
-            -->
 
         <ImageView
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="100dp"
             android:id="@+id/noDataImg"
             android:layout_width="267dp"
             android:src="@drawable/ic_no_data"
@@ -60,7 +59,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             tools:visibility="gone"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/reflectionRecyclerView"
             android:layout_width="wrap_content"
             android:layout_gravity="center_horizontal"

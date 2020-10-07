@@ -4,7 +4,7 @@
     <string name="accessibility_service_label">Epiphany</string>
     <string name="accessibility_service_description">Your social media addiction managed</string>
     <string name="wellbeing_question">How would you rate your overall well-being right now?</string>
-    <string name="what_else_question">What else could you have done in the time you spent? (Optional)</string>
+    <string name="what_else_question">What else could you have done in the time you spent on social media today? (Optional)</string>
     <string name="very_good_opt">Very Good</string>
     <string name="pretty_good_opt">Pretty Good</string>
     <string name="ok_opt">Ok</string>
