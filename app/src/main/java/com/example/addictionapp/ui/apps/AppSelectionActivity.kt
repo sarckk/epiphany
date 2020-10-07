@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.addictionapp.R
 import com.example.addictionapp.data.models.Application
@@ -27,18 +28,31 @@ class AppSelectionActivity : AppCompatActivity() {
     private val viewModel by viewModel<AppSelectionViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("abcd", "arrived at app selection activity")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_selection)
+        Log.d("abcd", "loaded layout")
 
+        fetchingAppsScreen.visibility = View.VISIBLE
+        val packageManager = applicationContext.packageManager
+        viewModel.startFetchAppList(packageManager)
         bindUIToViewModel()
     }
 
-    private fun addAppsToBlacklist() {
-    }
-
     private fun bindUIToViewModel() {
-        val packageManager = applicationContext.packageManager
-        val applications = viewModel.getAppList(packageManager)
+        viewModel.appList.observe(this, Observer {
+            Log.d("abcd", "Getting ${it}")
+            if(it != null && it.isNotEmpty()){
+                updateRecycler(it)
+            }
+        })
+
+        viewModel.loaded.observe(this, Observer {
+            if(it){
+                fetchingAppsScreen.visibility = View.GONE
+            }
+        })
+
 
         blacklistAppsButton.setOnClickListener {
             val applications = viewModel.blacklistedApplications
@@ -51,8 +65,6 @@ class AppSelectionActivity : AppCompatActivity() {
             startActivity(gotoMain)
             finish()
         }
-
-        updateRecycler(applications)
     }
 
     private fun updateRecycler(applications: List<ApplicationWithIcon>) {
@@ -60,7 +72,6 @@ class AppSelectionActivity : AppCompatActivity() {
 
         val groupieAdapter = GroupAdapter<GroupieViewHolder>().apply {
             spanCount = 1
-
             addAll(applicationListItems)
         }
 

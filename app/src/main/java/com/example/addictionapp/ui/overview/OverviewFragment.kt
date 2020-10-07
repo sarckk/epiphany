@@ -66,7 +66,6 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
 
 
     private fun setNewData (newValues: List<Entry>, chartMode: ChartModeEnum) {
-        // TODO: Add license for MPAndroidChart
         var lineDataSet: LineDataSet
 
         if(overviewChart.data != null && overviewChart.data.dataSetCount > 0){

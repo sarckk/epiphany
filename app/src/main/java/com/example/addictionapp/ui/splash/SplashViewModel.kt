@@ -9,11 +9,9 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class SplashViewModel(
-    val blocklistRepository: BlocklistRepository
+    private val blocklistRepository: BlocklistRepository
 ) : ViewModel() {
 
-    private val _loading = MutableLiveData<Boolean>()
-    val loading: LiveData<Boolean> = _loading
 
     val blocklistedAppsList : List<Application> =
         blocklistRepository.getAllBlacklistedApps()

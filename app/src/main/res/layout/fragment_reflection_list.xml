@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Your reflection history"
         android:textColor="@color/black"
         android:textSize="19sp" />

@@ -4,25 +4,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="20dp"
     android:orientation="vertical"
     tools:context=".ui.apps.AppSelectionActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        tools:visibility="gone"
-        android:layout_marginTop="10dp"
-        android:id="@+id/applicationRecyclerView"
+    <LinearLayout
+        android:id="@+id/fetchingAppsScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+        <ProgressBar
+            android:id="@+id/fetchingAppsProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/fetchingAppsProgressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Fetching list of apps on your phone..." />
+    </LinearLayout>
+
+    <TextView
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Choose apps to blacklist"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="22dp"
+        android:id="@+id/applicationRecyclerView"
+        android:layout_width="match_parent"
         android:layout_gravity="center_horizontal"
         android:layout_height="0dp"
         android:layout_weight="1"
         />
 
     <Button
+        android:layout_marginTop="0sp"
         android:id="@+id/blacklistAppsButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Blacklist apps" />

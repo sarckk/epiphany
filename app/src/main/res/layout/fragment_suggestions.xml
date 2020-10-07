@@ -44,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:fontFamily="sans-serif-medium"
         android:layout_marginTop="20dp"
         android:text="Activities suggested by you, for you"
         android:textColor="@color/black"

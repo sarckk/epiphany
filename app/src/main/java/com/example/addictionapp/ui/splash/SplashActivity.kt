@@ -23,8 +23,9 @@ class SplashActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val usagePermissionGranted = getUsagePermissionStatus()
+        Log.d("abcd", "permission - ${usagePermissionGranted.toString()}")
         val hasBlacklistedApps = hasBlacklistApps()
-        Log.d("TEST", usagePermissionGranted.toString())
+        Log.d("abcd","finished getting blacklist")
 
         if(usagePermissionGranted) {
             if (hasBlacklistedApps) {
@@ -41,7 +42,7 @@ class SplashActivity: AppCompatActivity() {
     private fun redirectToPermissions() {
         val gotoPermissions = Intent(this, PermissionsActivity::class.java)
         gotoPermissions.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        Log.d("TEST", "REDIRECT TO PERMISSIONS")
+        Log.d("abcd", "REDIRECT TO PERMISSIONS")
         startActivity(gotoPermissions)
         finish()
     }
@@ -49,7 +50,7 @@ class SplashActivity: AppCompatActivity() {
     private fun redirectToBlacklist() {
         val gotoBlacklist = Intent(this, AppSelectionActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        Log.d("TEST", "REDIRECT TO BLACKLIST")
+        Log.d("abcd", "REDIRECT TO BLACKLIST")
         startActivity(gotoBlacklist)
         finish()
     }
@@ -57,7 +58,7 @@ class SplashActivity: AppCompatActivity() {
     private fun redirectToMain() {
         val gotoMain = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        Log.d("TEST", "REDIRECT TO MAIN")
+        Log.d("abcd", "REDIRECT TO MAIN")
         startActivity(gotoMain)
         finish()
     }
@@ -68,6 +69,7 @@ class SplashActivity: AppCompatActivity() {
     }
 
     private fun hasBlacklistApps(): Boolean {
+        Log.d("abcd","getting blacklist")
         return viewModel.blocklistedAppsList.isNotEmpty()
     }
 }
