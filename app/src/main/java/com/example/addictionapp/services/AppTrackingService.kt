@@ -9,30 +9,58 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.navigation.NavDeepLinkBuilder
 import com.example.addictionapp.R
 import com.example.addictionapp.data.blocklist.BlocklistRepository
-import com.example.addictionapp.data.blocklist.BlocklistRepositoryImpl
+import org.koin.android.ext.android.inject
 
 class AppTrackingService : Service() {
     private val CHANNEL_ID = "Epiphany"
-    private val tracker = AppTracker()
+    private val repo: BlocklistRepository by inject()
 
-    class AppTracker: Thread() {
+    class AppTracker(repo: BlocklistRepository, context: Context): Thread() {
+        val context = context
+        val applicationsPackageNames = repo.getAllBlacklistedApps().map {
+            it.packageName
+        }
+
+        var isBlocklistedAppRunning = false
+
         override fun run() {
-            while (true) {
-                val usageEvents = usageStatsManager.queryEvents(System.currentTimeMillis() - 5000, System.currentTimeMillis())
 
+            while (true) {
+                val usageEvents = usageStatsManager.queryEvents(System.currentTimeMillis() - 10000, System.currentTimeMillis())
+
+                var blocklistedAppInUsageEvents = false
                 while (usageEvents.hasNextEvent()) {
                     var event: UsageEvents.Event = UsageEvents.Event()
                     val success = usageEvents.getNextEvent(event)
                     if (success) {
-                        Log.d("Epiphany", event.packageName)
+                        if (applicationsPackageNames.contains(event.packageName)) {
+                            blocklistedAppInUsageEvents = true
+                            isBlocklistedAppRunning = true
+                        }
+
+
                     }
                 }
 
-                sleep(5000)
+                if (isBlocklistedAppRunning && !blocklistedAppInUsageEvents) {
+                    isBlocklistedAppRunning = false
+
+                    //launch reflection intent
+                    NavDeepLinkBuilder(context)
+                        .setGraph(R.navigation.nav_graph)
+                        .setDestination(R.id.wellbeingStateFragment)
+                        .createPendingIntent()
+                }
+
+
+
+                sleep(10000)
             }
+
+
         }
     }
 
@@ -67,6 +95,7 @@ class AppTrackingService : Service() {
             .setTicker(getText(R.string.ticker_text))
             .build()
 
+        val tracker = AppTracker(repo, this)
         tracker.start()
 
         startForeground(1, notification)
