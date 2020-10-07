@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_overviewFragment_to_reflectionListFragment"
             app:destination="@id/reflectionListFragment" />
+        <action
+            android:id="@+id/action_overviewFragment_to_suggestionsFragment"
+            app:destination="@id/suggestionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/wellbeingStateFragment"
@@ -72,4 +75,8 @@
             app:popUpToInclusive="true"
             app:destination="@id/reflectionListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/suggestionsFragment"
+        android:name="com.example.addictionapp.ui.suggestions.SuggestionsFragment"
+        android:label="SuggestionsFragment" />
 </navigation>

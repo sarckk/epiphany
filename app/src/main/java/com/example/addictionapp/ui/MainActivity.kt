@@ -86,8 +86,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.bottom_nav_reflections -> {
                     navController.navigate(R.id.reflectionListFragment)
                 }
-                R.id.bottom_nav_activities -> {
-                    navController.navigate(R.id.reflectionListFragment)
+                R.id.bottom_nav_suggestions -> {
+                    navController.navigate(R.id.suggestionsFragment)
                 }
             }
             true
