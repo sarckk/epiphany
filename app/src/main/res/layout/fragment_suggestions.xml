@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    android:id="@+id/suggestionMotionLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -47,6 +49,24 @@
         android:textColor="@color/black"
         android:textSize="19sp" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/suggestionInput"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/suggestionHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your preferred activity here"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <TextView
         android:id="@+id/suggestionDescription"
         app:layout_constraintTop_toBottomOf="@+id/suggestionHeader"
@@ -62,10 +82,10 @@
         android:textSize="12sp" />
 
     <ImageView
+        android:id="@+id/noSuggestionImg"
         app:layout_constraintTop_toBottomOf="@id/suggestionDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/noSuggestionImg"
         android:layout_width="267dp"
         android:layout_height="210dp"
         android:layout_gravity="center"
@@ -86,27 +106,53 @@
         android:textSize="16sp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@+id/suggestionDescription"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/suggestionRecyclerView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"
-        tools:visibility="gone" />
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/suggestionInput"
+        app:layout_constraintBottom_toTopOf="@+id/createSuggestionBtn"
+        />
 
     <Button
-        app:layout_constraintTop_toBottomOf="@+id/noSuggestionText"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/createSuggestionBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:text="suggest an activity" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="Suggest an activity" />
+
+    <Button
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/finishSuggestionCreationBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="Finish" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/confirmSuggestionFab"
+        android:layout_width="wrap_content"
+        app:borderWidth="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/epiphanyPurpleFaded"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="6dp"
+        android:layout_marginRight="3dp"
+        app:tint="@color/white"
+        android:src="@drawable/ic_add"
+        android:contentDescription="Add suggestion"
+        />
+
 </androidx.constraintlayout.motion.widget.MotionLayout>
 

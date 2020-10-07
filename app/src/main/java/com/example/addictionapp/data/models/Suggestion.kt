@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 )
 data class Suggestion (
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     @ColumnInfo(name="activity_name")
     val activityName: String
 )

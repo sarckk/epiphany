@@ -1,20 +1,32 @@
 package com.example.addictionapp.ui.suggestions
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.addictionapp.R
+import com.example.addictionapp.data.models.Reflection
 import com.example.addictionapp.data.models.Suggestion
 import com.example.addictionapp.ui.reflection.list.ReflectionListFragmentDirections
+import com.example.addictionapp.ui.reflection.list.ReflectionListItem
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
+import kotlinx.android.synthetic.main.fragment_reflection_list.*
 import kotlinx.android.synthetic.main.fragment_suggestions.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SuggestionsFragment : Fragment(){
     private val viewModel by viewModel<SuggestionsViewModel>()
+
+    companion object {
+        private const val TAG = "SuggestionsFragment"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,8 +39,17 @@ class SuggestionsFragment : Fragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        createSuggestionBtn.setOnClickListener {
-            // TODO: Add suggestion flow
+        finishSuggestionCreationBtn.setOnClickListener {
+            findNavController().navigate(R.id.suggestionsFragment)
+        }
+
+        confirmSuggestionFab.setOnClickListener {
+            val text = suggestionInput.editText?.text.toString().trim()
+            if(text != null && text.isNotEmpty()){
+                viewModel.addSuggestion(text)
+            }
+            // clear text
+            suggestionInput.editText?.text?.clear()
         }
 
         bindUIToViewModel()
@@ -39,7 +60,7 @@ class SuggestionsFragment : Fragment(){
             if(suggestions.isNotEmpty()){
                 noSuggestionImg.visibility = View.GONE
                 noSuggestionText.visibility = View.GONE
-                updateRecycler(suggestions)
+                updateRecycler(suggestions.reversed())
             } else{
                 noSuggestionImg.visibility = View.VISIBLE
                 noSuggestionText.visibility = View.VISIBLE
@@ -55,6 +76,25 @@ class SuggestionsFragment : Fragment(){
     }
 
     private fun updateRecycler(suggestions: List<Suggestion>) {
-       // TODO: Implement this
+        val suggestionItems = suggestions.toSuggestionItem()
+        val groupieAdapter = GroupAdapter<GroupieViewHolder>().apply{
+            setOnItemClickListener { item, view ->
+                val position = getAdapterPosition(item)
+                val suggestionClicked = suggestionItems[position]
+                Log.d(TAG, suggestionClicked.toString())
+            }
+            addAll(suggestionItems)
+        }
+
+        suggestionRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = groupieAdapter
+        }
+    }
+
+    private fun List<Suggestion>.toSuggestionItem() : List<SuggestionItem>{
+        return this.map {
+            SuggestionItem(it)
+        }
     }
 }
