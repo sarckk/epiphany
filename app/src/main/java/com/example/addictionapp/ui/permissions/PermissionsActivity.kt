@@ -34,6 +34,7 @@ class PermissionsActivity : AppCompatActivity(){
         val PERMISSIONS = arrayOf(
             Manifest.permission.FOREGROUND_SERVICE,
             Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
         )
     }
 
