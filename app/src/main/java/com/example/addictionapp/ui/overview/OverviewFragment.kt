@@ -49,7 +49,6 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
         super.onActivityCreated(savedInstanceState)
 
         setUpRadioListeners()
-        setUpToolbar()
         setUpLineChart()
         bindChartToViewModel()
     }
@@ -73,10 +72,6 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
         })
     }
 
-    private fun setUpToolbar() {
-        overviewToolbarText.setText(R.string.app_name)
-        overviewToolbar.inflateMenu(R.menu.menu_overview)
-    }
 
     private fun setNewData (newValues: List<Entry>, chartMode: ChartModeEnum) {
         // TODO: Add license for MPAndroidChart

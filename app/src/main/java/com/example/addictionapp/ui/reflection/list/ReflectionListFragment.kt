@@ -49,26 +49,13 @@ class ReflectionListFragment : Fragment() {
         }
         **/
 
-        setUpToolbar()
-
         // launch new Activity when LOG btn clicked
         createReflectionBtn.setOnClickListener {
             val action = ReflectionListFragmentDirections.actionReflectionListFragmentToWellbeingStateFragment()
-            Log.d("TEST", "HERE")
             findNavController().navigate(action)
         }
 
         bindUIToViewModel()
-    }
-
-    private fun setUpToolbar(){
-        listToolbar.let{
-            it.setNavigationIcon(R.drawable.ic_back)
-            it.setNavigationOnClickListener() {
-                findNavController().navigateUp()
-            }
-            it.title = "Your reflection history"
-        }
     }
 
     private fun bindUIToViewModel() {

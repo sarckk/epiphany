@@ -11,9 +11,11 @@ import android.view.Gravity
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.addictionapp.R
 import com.example.addictionapp.services.AppTrackingService
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -26,6 +28,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setUpToolbar()
+        setUpBottomNav()
+
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
@@ -37,4 +42,25 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    private fun setUpToolbar() {
+        main_toolbar_text.setText(R.string.app_name)
+        main_toolbar.inflateMenu(R.menu.menu_overview)
+    }
+
+    private fun setUpBottomNav(){
+        main_bottom_nav.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.bottom_nav_statistics -> {
+                    navController.navigate(R.id.overviewFragment)
+                }
+                R.id.bottom_nav_reflections -> {
+                    navController.navigate(R.id.reflectionListFragment)
+                }
+                R.id.bottom_nav_activities -> {
+                    navController.navigate(R.id.reflectionListFragment)
+                }
+            }
+            true
+        }
+    }
 }

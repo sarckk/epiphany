@@ -6,12 +6,6 @@
     android:padding="10dp"
     android:orientation="vertical"
     tools:context=".ui.reflection.list.ReflectionListFragment">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/listToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            />
-
         <LinearLayout
             tools:visibility="gone"
             android:id="@+id/loadingScreenLoadAll"
@@ -46,7 +40,7 @@
             -->
 
         <ImageView
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="140dp"
             android:id="@+id/noDataImg"
             android:layout_width="267dp"
             android:src="@drawable/ic_no_data"
