@@ -20,9 +20,12 @@ import com.example.addictionapp.utils.Awareness
 import com.example.addictionapp.utils.LocationBroadcastReceiver
 import com.example.addictionapp.utils.Notifier
 import com.huawei.hms.location.ActivityIdentification
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.logging.SimpleFormatter
 
 
 class AppTrackingService : Service() {
@@ -62,7 +65,7 @@ class AppTrackingService : Service() {
             }
         }
 
-        fun trackUsedApps() {
+        fun trackUsedApps() = GlobalScope.launch {
             val usageEvents = usageStatsManager.queryEvents(System.currentTimeMillis() - 1000, System.currentTimeMillis())
 
             while (usageEvents.hasNextEvent()) {
@@ -76,6 +79,19 @@ class AppTrackingService : Service() {
                     if (applicationsPackageNames.contains(event.packageName) && event.eventType == UsageEvents.Event.ACTIVITY_STOPPED) {
                         Log.d("testable", "Blacklisted app stopped")
                         blacklistedAppRunning = false
+
+
+                        val today = LocalDateTime.now()
+                        // today's date in SQLite friendly format
+                        val todayDateFormatted = DateTimeFormatter.ofPattern("dd/MM/yyyy").format(today)
+
+                        // check if there hasnt been a reflection today
+                        val reflection = reflectionRepo.getReflection(todayDateFormatted)
+                        if(reflection == null){
+                            Log.e("AppTrackingService", "No reflection found")
+                            return@launch
+                        }
+
 
                         val pendingIntent: PendingIntent =
                             NavDeepLinkBuilder(context)
