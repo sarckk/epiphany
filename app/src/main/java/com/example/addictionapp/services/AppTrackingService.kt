@@ -9,10 +9,11 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.addictionapp.R
-import com.example.addictionapp.data.ReflectionRepository
+import com.example.addictionapp.data.reflections.ReflectionRepository
 import com.example.addictionapp.data.blocklist.BlocklistRepository
 import com.example.addictionapp.ui.MainActivity
 import com.example.addictionapp.utils.Awareness
@@ -80,13 +81,18 @@ class AppTrackingService : Service() {
                                 .setDestination(R.id.wellbeingStateFragment)
                                 .createPendingIntent()
 
-                        Notification.Builder(context, CHANNEL_ID)
+                        val notification = Notification.Builder(context, CHANNEL_ID)
                             .setContentTitle("Fill an reflection!")
                             .setContentText("Fill out an reflection")
                             .setSmallIcon(R.drawable.epiphany_logo)
                             .setContentIntent(pendingIntent)
                             .setTicker("todo")
                             .build()
+
+                        with(NotificationManagerCompat.from(context)) {
+                            // notificationId is a unique int for each notification that you must define
+                            notify(1338, notification)
+                        }
                     }
                 }
             }
@@ -103,13 +109,18 @@ class AppTrackingService : Service() {
                     Intent(context, AppTrackingService::class.java).let { notificationIntent ->
                         PendingIntent.getActivity(context, 0, notificationIntent, 0)
                     }
-                Notification.Builder(context, CHANNEL_ID)
+                val notification = Notification.Builder(context, CHANNEL_ID)
                     .setContentTitle("Stay strong!")
                     .setContentText("We detected that you're likely to use social media!")
                     .setSmallIcon(R.drawable.epiphany_logo)
                     .setContentIntent(pendingIntent)
                     .setTicker("todo")
                     .build()
+
+                with(NotificationManagerCompat.from(context)) {
+                    // notificationId is a unique int for each notification that you must define
+                    notify(1337, notification)
+                }
             }
         }
 
@@ -186,8 +197,6 @@ class AppTrackingService : Service() {
         tracker.start()
 
         startForeground(1, notification)
-
-
 
         return START_NOT_STICKY
     }
