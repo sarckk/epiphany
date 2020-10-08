@@ -30,6 +30,7 @@ import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_overview.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
+import java.util.*
 
 class OverviewFragment : Fragment(), OnChartValueSelectedListener {
     private val viewModel by viewModel<OverviewViewModel>()
@@ -128,7 +129,7 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
         }
     }
 
-    private fun setChartXAXisStyle( chartMode: ChartModeEnum ){
+    private fun setChartXAXisStyle( chartMode: ChartModeEnum){
         if(chartMode == ChartModeEnum.WEEKLY){
             overviewChart.xAxis.run {
                 valueFormatter = DayOfWeekFormatter()
@@ -145,6 +146,7 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
     private fun setUpLineChart(){
         overviewChart.run {
             setTouchEnabled(true)
+            extraTopOffset = 10f
             setPinchZoom(false)
             setScaleEnabled(false)
             isDragEnabled= true
@@ -176,16 +178,15 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
         val formatter = SimpleDateFormat("dd MMMM yyyy")
         val data = e?.data as PlaceHolderData?
         overviewInfoDate.text = formatter.format(data?.date)
+        totalTimeStats.text = "${e?.y} minutes"
         // this should be a link to the reflection using navigation component and passing in the primary key as argument
         data?.appData?.let { updateRecycler(it) }
     }
 
     private fun updateRecycler(applications: List<AppUsageData>) {
         val applicationListItems = applications.toApplicationItem()
-
         val groupieAdapter = GroupAdapter<GroupieViewHolder>().apply {
             spanCount = 1
-
             addAll(applicationListItems)
         }
 

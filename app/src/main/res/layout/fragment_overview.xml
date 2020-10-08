@@ -7,7 +7,7 @@
     android:orientation="vertical"
     app:layoutDescription="@xml/fragment_overview_scene">
     <RadioGroup
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toTopOf="@id/overviewChart"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/radioGrp"
@@ -34,8 +34,7 @@
         android:id="@+id/overviewChart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="5dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginHorizontal="3dp"
         app:layout_constraintBottom_toTopOf="@id/overviewInfo"
         app:layout_constraintTop_toBottomOf="@id/radioGrp" />
 
@@ -53,16 +52,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="October 1, 2020"
+            android:text="08 October, 2020"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="34sp"
             android:fontFamily="sans-serif-black"
             />
+        <TextView
+            android:id="@+id/totalTimeStats"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1042 minutes"/>
+        <TextView
+            android:id="@+id/totalTimeDesc"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="spent on your phone"/>
+        <TextView
+            android:id="@+id/breakdownText"
+            android:textSize="24sp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Here's the breakdown:"/>
         <androidx.recyclerview.widget.RecyclerView
+            android:nestedScrollingEnabled="false"
             tools:visibility="gone"
             android:layout_marginTop="10dp"
             android:id="@+id/applicationUsageRecyclerView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_height="0dp"
             android:layout_weight="1"
