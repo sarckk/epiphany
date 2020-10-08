@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.addictionapp.R
 import com.example.addictionapp.services.AppTrackingService
+import com.example.addictionapp.utils.HmsUtils
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-
+        Log.d("EpiphanyHMS", HmsUtils.isHmsAvailable(this).toString())
         AppTrackingService.startService(this)
     }
 

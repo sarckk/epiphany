@@ -3,6 +3,7 @@ package com.example.addictionapp.utils
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.example.addictionapp.data.api.BackendCalls
 import com.huawei.hms.location.ActivityIdentificationData
 import com.huawei.hms.location.ActivityIdentificationResponse
@@ -32,7 +33,7 @@ class LocationBroadcastReceiver : BroadcastReceiver() {
                     ActivityIdentificationData.RUNNING -> result = "RUNNING"
                 }
 
-                backend.sendAccelerometer("71053", result)
+                Log.d("EpiphanyHMS", result)
             }
         }
     }

@@ -20,11 +20,11 @@ class Awareness {
             .addOnSuccessListener { timeCategoriesResponse ->
                 val categories = timeCategoriesResponse.timeCategories
                 val timeInfo = categories.timeCategories
-                Log.d("Epiphany", timeInfo.toString())
+                Log.d("EpiphanyHMS", timeInfo.toString())
             }
             .addOnFailureListener { e ->
                 Log.e(
-                    "Epiphany",
+                    "EpiphanyHMS",
                     "get Time Categories failed",
                     e
                 )
