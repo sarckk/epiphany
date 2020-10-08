@@ -12,6 +12,10 @@ class SuggestionRepositoryImpl(
         return suggestionDao.getAllSuggestions()
     }
 
+    override fun getAllSuggestionsSync(): List<Suggestion> {
+        return suggestionDao.getAllSuggestionsSync()
+    }
+
     override suspend fun getSuggestion(id: Int): Suggestion {
         return suggestionDao.getSuggestion(id)
     }

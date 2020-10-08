@@ -49,7 +49,7 @@ class AppTrackingService : Service() {
         val MILLIS_IN_HOUR = 60 * 60 * 1000
 
         var startTimer = System.currentTimeMillis()
-        var lastNotifTimer = System.currentTimeMillis() - 60 * 60 * 1000 * 3
+        var lastNotifTimer = System.currentTimeMillis() - 60 * 60 * 1000 * 4
         var blacklistedAppRunning = false
 
         override fun run() {
@@ -122,7 +122,7 @@ class AppTrackingService : Service() {
         private fun shouldShowNotification(timePreviousDay: Long, currentTimeRunning: Long) {
 
             if (notifier.shouldNotify(timePreviousDay, currentTimeRunning)) {
-
+                sleep(10000)
                 lastNotifTimer = System.currentTimeMillis()
                 val pendingIntent: PendingIntent =
                     Intent(context, AppTrackingService::class.java).let { notificationIntent ->
@@ -198,8 +198,8 @@ class AppTrackingService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        createNotificationChannel(CHANNEL_ID)
-        createNotificationChannel("EpiphanyImportant")
+        createNotificationChannel(CHANNEL_ID, NotificationManager.IMPORTANCE_DEFAULT)
+        createNotificationChannel("EpiphanyImportant", NotificationManager.IMPORTANCE_MAX)
         val pendingIntent: PendingIntent =
             Intent(this, AppTrackingService::class.java).let { notificationIntent ->
                 PendingIntent.getActivity(this, 0, notificationIntent, 0)
@@ -224,10 +224,9 @@ class AppTrackingService : Service() {
         return null
     }
 
-    fun createNotificationChannel(CHANNEL_ID: String) {
+    fun createNotificationChannel(CHANNEL_ID: String, priority: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val serviceChannel = NotificationChannel(CHANNEL_ID, "Epiphany service",
-                NotificationManager.IMPORTANCE_DEFAULT)
+            val serviceChannel = NotificationChannel(CHANNEL_ID, "Epiphany service", priority)
             val manager = getSystemService(NotificationManager::class.java)
             manager!!.createNotificationChannel(serviceChannel)
         }
