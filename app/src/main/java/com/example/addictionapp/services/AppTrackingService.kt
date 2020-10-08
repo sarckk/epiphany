@@ -41,8 +41,10 @@ class AppTrackingService : Service() {
         }
 
         val MILLIS_IN_DAY = 86400000
+        val MILLIS_IN_HOUR = 60 * 60 * 1000
 
         var startTimer = System.currentTimeMillis()
+        var lastNotifTimer = System.currentTimeMillis()
         var blacklistedAppRunning = false
 
         override fun run() {
@@ -51,7 +53,8 @@ class AppTrackingService : Service() {
                 .sumByLong { usageData: UsageStats -> (usageData.totalTimeInForeground / 1000 / 60 / 60) as Long }
             while (true) {
                 trackUsedApps()
-                if (!blacklistedAppRunning) {
+                if (!blacklistedAppRunning && System.currentTimeMillis() - lastNotifTimer > 4 * MILLIS_IN_HOUR) {
+                    lastNotifTimer = System.currentTimeMillis()
                     shouldShowNotification(timePreviousDay, (System.currentTimeMillis() - startTimer) / 1000)
                 }
                 //trackActivities()
