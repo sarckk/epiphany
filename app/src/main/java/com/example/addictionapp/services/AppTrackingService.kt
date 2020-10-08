@@ -57,7 +57,8 @@ class AppTrackingService : Service() {
                     lastNotifTimer = System.currentTimeMillis()
                     shouldShowNotification(timePreviousDay, (System.currentTimeMillis() - startTimer) / 1000)
                 }
-                //trackActivities()
+                getTime()
+                trackActivities()
                 sleep(1000)
             }
         }
