@@ -26,7 +26,7 @@ class WhatElseViewModel(
     fun addReflection(wellbeingState: String, whatElseText: String?) = viewModelScope.launch {
         Log.d(TAG, "Adding: $wellbeingState and $whatElseText")
         val currentTime = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val formattedDate = formatter.format(currentTime)
         val reflection = Reflection(formattedDate, wellbeingState, whatElseText)
         reflectionRepository.upsertReflection(reflection)

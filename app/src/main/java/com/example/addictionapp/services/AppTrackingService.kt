@@ -2,6 +2,7 @@ package com.example.addictionapp.services
 
 import android.app.*
 import android.app.usage.UsageEvents
+import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
@@ -11,65 +12,105 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.addictionapp.R
+import com.example.addictionapp.data.ReflectionRepository
 import com.example.addictionapp.data.blocklist.BlocklistRepository
+import com.example.addictionapp.ui.MainActivity
 import com.example.addictionapp.utils.Awareness
 import com.example.addictionapp.utils.LocationBroadcastReceiver
-import com.huawei.hmf.tasks.OnFailureListener
-import com.huawei.hmf.tasks.OnSuccessListener
+import com.example.addictionapp.utils.Notifier
 import com.huawei.hms.location.ActivityIdentification
 import org.koin.android.ext.android.inject
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class AppTrackingService : Service() {
     private val CHANNEL_ID = "Epiphany"
     private val repo: BlocklistRepository by inject()
+    private val reflectionRepo: ReflectionRepository by inject()
 
-    class AppTracker(repo: BlocklistRepository, context: Context): Thread() {
+    class AppTracker(repo: BlocklistRepository, reflectionRepo: ReflectionRepository, context: Context): Thread() {
         val context = context
         val awareness = Awareness()
+        val CHANNEL_ID = "EpiphanyImportant"
+        val notifier = Notifier()
+        val reflectionRepo = reflectionRepo
         val applicationsPackageNames = repo.getAllBlacklistedApps().map {
             it.packageName
         }
 
-        var isBlocklistedAppRunning = false
+        val MILLIS_IN_DAY = 86400000
+
+        var startTimer = System.currentTimeMillis()
+        var blacklistedAppRunning = false
 
         override fun run() {
+            val timePreviousDay = usageStatsManager.queryAndAggregateUsageStats(System.currentTimeMillis() - MILLIS_IN_DAY, System.currentTimeMillis())
+                .map { usageData -> usageData.value }
+                .sumByLong { usageData: UsageStats -> (usageData.totalTimeInForeground / 1000 / 60 / 60) as Long }
             while (true) {
                 trackUsedApps()
-                getTime()
-                trackActivities()
-                sleep(10000)
+                if (!blacklistedAppRunning) {
+                    shouldShowNotification(timePreviousDay, (System.currentTimeMillis() - startTimer) / 1000)
+                }
+                //trackActivities()
+                sleep(1000)
             }
         }
 
         fun trackUsedApps() {
-            val usageEvents = usageStatsManager.queryEvents(System.currentTimeMillis() - 10000, System.currentTimeMillis())
+            val usageEvents = usageStatsManager.queryEvents(System.currentTimeMillis() - 1000, System.currentTimeMillis())
 
-            var blocklistedAppInUsageEvents = false
             while (usageEvents.hasNextEvent()) {
                 var event: UsageEvents.Event = UsageEvents.Event()
                 val success = usageEvents.getNextEvent(event)
                 if (success) {
-                    if (applicationsPackageNames.contains(event.packageName)) {
-                        blocklistedAppInUsageEvents = true
-                        isBlocklistedAppRunning = true
+                    if (applicationsPackageNames.contains(event.packageName) && event.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
+                        startTimer = System.currentTimeMillis()
+                        blacklistedAppRunning = true
+                    }
+                    if (applicationsPackageNames.contains(event.packageName) && event.eventType == UsageEvents.Event.ACTIVITY_STOPPED) {
+                        Log.d("testable", "Blacklisted app stopped")
+                        blacklistedAppRunning = false
+
+                        val pendingIntent: PendingIntent =
+                            NavDeepLinkBuilder(context)
+                                .setComponentName(MainActivity::class.java)
+                                .setGraph(R.navigation.nav_graph)
+                                .setDestination(R.id.wellbeingStateFragment)
+                                .createPendingIntent()
+
+                        Notification.Builder(context, CHANNEL_ID)
+                            .setContentTitle("Fill an reflection!")
+                            .setContentText("Fill out an reflection")
+                            .setSmallIcon(R.drawable.epiphany_logo)
+                            .setContentIntent(pendingIntent)
+                            .setTicker("todo")
+                            .build()
                     }
                 }
-            }
-
-            if (isBlocklistedAppRunning && !blocklistedAppInUsageEvents) {
-                isBlocklistedAppRunning = false
-
-                //launch reflection intent
-                NavDeepLinkBuilder(context)
-                    .setGraph(R.navigation.nav_graph)
-                    .setDestination(R.id.wellbeingStateFragment)
-                    .createPendingIntent()
             }
         }
 
         private fun getTime() {
             awareness.getTimeCategory(context as Activity)
+        }
+
+        private fun shouldShowNotification(timePreviousDay: Long, currentTimeRunning: Long) {
+
+            if (notifier.shouldNotify(timePreviousDay, currentTimeRunning)) {
+                val pendingIntent: PendingIntent =
+                    Intent(context, AppTrackingService::class.java).let { notificationIntent ->
+                        PendingIntent.getActivity(context, 0, notificationIntent, 0)
+                    }
+                Notification.Builder(context, CHANNEL_ID)
+                    .setContentTitle("Stay strong!")
+                    .setContentText("We detected that you're likely to use social media!")
+                    .setSmallIcon(R.drawable.epiphany_logo)
+                    .setContentIntent(pendingIntent)
+                    .setTicker("todo")
+                    .build()
+            }
         }
 
         private fun getPendingIntent(): PendingIntent? {
@@ -84,18 +125,26 @@ class AppTrackingService : Service() {
             val pendingIntent = getPendingIntent();
 
             activityIdentificationService.createActivityIdentificationUpdates(5000, pendingIntent)
-                .addOnSuccessListener(OnSuccessListener<Void?> {
+                .addOnSuccessListener {
                     Log.i(
                         "EpiphanyHMS",
                         "createActivityIdentificationUpdates onSuccess"
                     )
-                })
-                .addOnFailureListener(OnFailureListener { e ->
+                }
+                .addOnFailureListener { e ->
                     Log.e(
                         "EpiphanyHMS",
                         "createActivityIdentificationUpdates onFailure:" + e.message
                     )
-                })
+                }
+        }
+
+        inline fun <T> Iterable<T>.sumByLong(selector: (T) -> Long): Long {
+            var sum = 0L
+            for (element in this) {
+                sum += selector(element)
+            }
+            return sum
         }
     }
 
@@ -119,7 +168,8 @@ class AppTrackingService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        createNotificationChannel()
+        createNotificationChannel(CHANNEL_ID)
+        createNotificationChannel("EpiphanyImportant")
         val pendingIntent: PendingIntent =
             Intent(this, AppTrackingService::class.java).let { notificationIntent ->
                 PendingIntent.getActivity(this, 0, notificationIntent, 0)
@@ -132,7 +182,7 @@ class AppTrackingService : Service() {
             .setTicker(getText(R.string.ticker_text))
             .build()
 
-        val tracker = AppTracker(repo, context)
+        val tracker = AppTracker(repo, reflectionRepo, context)
         tracker.start()
 
         startForeground(1, notification)
@@ -146,7 +196,7 @@ class AppTrackingService : Service() {
         return null
     }
 
-    private fun createNotificationChannel() {
+    fun createNotificationChannel(CHANNEL_ID: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(CHANNEL_ID, "Epiphany service",
                 NotificationManager.IMPORTANCE_DEFAULT)
