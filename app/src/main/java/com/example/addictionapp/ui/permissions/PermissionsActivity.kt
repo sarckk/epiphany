@@ -41,11 +41,12 @@ class PermissionsActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_permissions)
 
+        if (!hasPermissions(this)) {
+            enableCustomPermissions()
+        }
+
         watchForUsagePermissionChange()
         enableUsageDataAccess.setOnClickListener{
-            if (!hasPermissions(this)) {
-                enableCustomPermissions()
-            }
             redirectToSpecificPermissionSettings()
         }
     }

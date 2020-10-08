@@ -30,7 +30,7 @@ abstract class SuggestionDatabase: RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context): SuggestionDatabase {
-            return Room.databaseBuilder(context, SuggestionDatabase::class.java, "suggestion_db").build()
+            return Room.databaseBuilder(context, SuggestionDatabase::class.java, "suggestion_db").allowMainThreadQueries().build()
         }
     }
 }

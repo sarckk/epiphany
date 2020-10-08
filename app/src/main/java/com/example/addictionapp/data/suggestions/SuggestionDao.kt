@@ -10,6 +10,9 @@ interface SuggestionDao{
     @Query("SELECT * FROM suggestion_table")
     fun getAllSuggestions(): Flow<List<Suggestion>>
 
+    @Query("SELECT * FROM suggestion_table")
+    fun getAllSuggestionsSync(): Flow<List<Suggestion>>
+
     @Query("SELECT * FROM suggestion_table WHERE id = :id")
     suspend fun getSuggestion(id: Int): Suggestion
 

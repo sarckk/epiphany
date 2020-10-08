@@ -63,7 +63,7 @@ class AppTrackingService : Service() {
                     shouldShowNotification(timePreviousDay, (System.currentTimeMillis() - startTimer) / 1000)
                 }
                 //getTime()
-                trackActivities()
+                //trackActivities()
                 sleep(1000)
             }
         }
@@ -91,29 +91,25 @@ class AppTrackingService : Service() {
                         // check if there hasnt been a reflection today
                         val reflection = reflectionRepo.getReflection(todayDateFormatted)
                         if(reflection == null){
-                            Log.e("AppTrackingService", "No reflection found")
-                            return@launch
-                        }
+                            val pendingIntent: PendingIntent =
+                                NavDeepLinkBuilder(context)
+                                    .setComponentName(MainActivity::class.java)
+                                    .setGraph(R.navigation.nav_graph)
+                                    .setDestination(R.id.wellbeingStateFragment)
+                                    .createPendingIntent()
 
+                            val notification = Notification.Builder(context, CHANNEL_ID)
+                                .setContentTitle("Fill an reflection!")
+                                .setContentText("Fill out an reflection")
+                                .setSmallIcon(R.drawable.epiphany_logo)
+                                .setContentIntent(pendingIntent)
+                                .setTicker("todo")
+                                .build()
 
-                        val pendingIntent: PendingIntent =
-                            NavDeepLinkBuilder(context)
-                                .setComponentName(MainActivity::class.java)
-                                .setGraph(R.navigation.nav_graph)
-                                .setDestination(R.id.wellbeingStateFragment)
-                                .createPendingIntent()
-
-                        val notification = Notification.Builder(context, CHANNEL_ID)
-                            .setContentTitle("Fill an reflection!")
-                            .setContentText("Fill out an reflection")
-                            .setSmallIcon(R.drawable.epiphany_logo)
-                            .setContentIntent(pendingIntent)
-                            .setTicker("todo")
-                            .build()
-
-                        with(NotificationManagerCompat.from(context)) {
-                            // notificationId is a unique int for each notification that you must define
-                            notify(1338, notification)
+                            with(NotificationManagerCompat.from(context)) {
+                                // notificationId is a unique int for each notification that you must define
+                                notify(1338, notification)
+                            }
                         }
                     }
                 }
