@@ -18,9 +18,7 @@ class SplashActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val usagePermissionGranted = getUsagePermissionStatus()
-        Log.d("abcd", "permission - ${usagePermissionGranted.toString()}")
         val hasBlacklistedApps = hasBlacklistApps()
-        Log.d("abcd","finished getting existing blacklist information")
 
         if(usagePermissionGranted) {
             if (hasBlacklistedApps) {
@@ -65,7 +63,6 @@ class SplashActivity: AppCompatActivity() {
     }
 
     private fun hasBlacklistApps(): Boolean {
-        Log.d("abcd","getting blacklist")
         return viewModel.blocklistedAppsList.isNotEmpty()
     }
 }

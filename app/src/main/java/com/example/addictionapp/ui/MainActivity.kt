@@ -48,12 +48,16 @@ class MainActivity : AppCompatActivity() {
         main_toolbar_text.setText(R.string.app_name)
         main_toolbar.inflateMenu(R.menu.menu_overview)
 
-        main_toolbar.setNavigationOnClickListener {
-            when(it.id){
+        main_toolbar.setOnMenuItemClickListener {
+            when(it.itemId){
                 R.id.settingsIcon -> {
-                    navController.navigate(R.id.appSelectionFragment)
+                    val args = Bundle().apply {
+                        putBoolean("fromMain", true)
+                    }
+                    navController.navigate(R.id.appSelectionFragment, args)
                 }
             }
+            true
         }
 
         setUpFragmentToolbarVariants()

@@ -9,6 +9,10 @@
         android:id="@+id/appSelectionFragment"
         android:name="com.example.addictionapp.ui.onboarding.apps.AppSelectionFragment"
         android:label="AppSelectionFragment" >
+        <argument
+            android:name="fromMain"
+            app:argType="boolean"
+            android:defaultValue="false" />
         <action
             android:id="@+id/action_overviewFragment_to_suggestionsFragment"
             app:destination="@id/suggestionsFragment"

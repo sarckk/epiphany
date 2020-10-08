@@ -97,7 +97,6 @@ class SuggestionsFragment : Fragment() {
             setOnItemClickListener { item, view ->
                 val position = getAdapterPosition(item)
                 val suggestionClicked = suggestionItems[position]
-                Log.d(TAG, suggestionClicked.toString())
             }
             addAll(suggestionItems)
         }

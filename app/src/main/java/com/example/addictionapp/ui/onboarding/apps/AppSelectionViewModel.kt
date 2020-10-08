@@ -2,6 +2,7 @@ package com.example.addictionapp.ui.onboarding.apps
 
 import com.example.addictionapp.data.models.Application
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.addictionapp.data.blocklist.BlocklistRepository
 import com.example.addictionapp.data.models.ApplicationWithIcon
@@ -12,14 +13,15 @@ class AppSelectionViewModel(
     private val blocklistRepository: BlocklistRepository
 ) : ViewModel() {
 
-    val blacklistedApplications: MutableList<Application> = mutableListOf()
+    val addBlacklistApplications: MutableList<Application> = mutableListOf()
+    val removeBlacklistApplications: MutableList<String> = mutableListOf()
 
-    fun addToBlacklistedApps(name: String, packageName: String) {
-        blacklistedApplications.add(Application(name, packageName))
+    fun toBeBlackListed(name: String, packageName: String ) {
+        addBlacklistApplications.add(Application(name, packageName))
     }
 
-    fun removeFromBlacklistedApps(name: String, packageName: String) {
-        blacklistedApplications.remove(Application(name, packageName))
+    fun toBeUnblackListed(packageName: String) {
+        removeBlacklistApplications.add(packageName)
     }
 
     private val _packageManager = MutableLiveData<PackageManager>()
@@ -34,12 +36,19 @@ class AppSelectionViewModel(
     val appList = _packageManager.switchMap {
         liveData(Dispatchers.IO){
             _loaded.postValue( false)
+            // will block
+            val dbList = blocklistRepository.getAllBlacklistedApps()
             val applist = it.getInstalledApplications(PackageManager.GET_META_DATA).map { app ->
+                Log.d("TEST", app.toString())
+                val isBlacklisted = dbList.any {dbRecord ->
+                    dbRecord.name == (it.getApplicationLabel(app) as String)
+                }
                 ApplicationWithIcon (it.getApplicationIcon(app),
                     it.getApplicationLabel(app) as String,
                     app.packageName,
-                    { name, packageName -> addToBlacklistedApps(name, packageName) },
-                    { name, packageName -> removeFromBlacklistedApps(name, packageName) }
+                    isBlacklisted, // change this dynamically
+                    { name, packageName -> toBeBlackListed(name, packageName) },
+                    { packageName -> toBeUnblackListed(packageName) }
                 )
             }
             _loaded.postValue( true)
@@ -49,5 +58,9 @@ class AppSelectionViewModel(
 
     fun upsertApplication(application: Application) = viewModelScope.launch {
         blocklistRepository.upsertApplication(application)
+    }
+
+    fun deleteApplication(packageName: String) = viewModelScope.launch {
+        blocklistRepository.deleteApplication(packageName)
     }
 }

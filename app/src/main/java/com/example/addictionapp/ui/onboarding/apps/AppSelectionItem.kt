@@ -12,18 +12,21 @@ private const val CHAR_LIMIT = 22
 class AppSelectionItem(private val app: ApplicationWithIcon) : Item(){
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        val wasInitiallyBlacklisted = app.isBlacklisted
+
         viewHolder.itemView.apply{
             applicationIcon.setImageDrawable(app.icon)
             applicationName.text = if(app.name.length > CHAR_LIMIT)
                 app.name.substring(0, Math.min(app.name.length, CHAR_LIMIT)).plus("...")
                 else app.name
+            applicationSelected.isChecked = wasInitiallyBlacklisted
         }
 
         viewHolder.itemView.applicationSelected.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
+            if(isChecked && !wasInitiallyBlacklisted){
                 app.addToBlacklistedApps(app.name, app.packageName)
-            } else {
-                app.removeFromBlacklistedApps(app.name, app.packageName)
+            }else if(!isChecked && wasInitiallyBlacklisted){
+                app.removeFromBlacklistedApps(app.packageName)
             }
         }
     }
