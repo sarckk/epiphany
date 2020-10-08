@@ -1,4 +1,8 @@
 {
+	"agcgw":{
+		"backurl":"connect-dre.dbankcloud.cn",
+		"url":"connect-dre.hispace.hicloud.com"
+	},
 	"client":{
 		"cp_id":"5190048000024945029",
 		"product_id":"736430079244659568",
@@ -8,5 +12,19 @@
 		"package_name":"com.example.addictionapp",
 		"api_key":"CgB6e3x9l7jtCMiYEMORI//IJo9/Bd0egT7vItaqRYCAF6a+Xs+quymA1kHoBEWzpXevB0HehEHpMhlWyu6IilHb"
 	},
+	"service":{
+		"analytics":{
+			"collector_url":"datacollector-dre.dt.hicloud.com,datacollector-dre.dt.dbankcloud.cn",
+			"resource_id":"p1",
+			"channel_id":""
+		},
+		"cloudstorage":{
+			"storage_url":"https://ops-dre.agcstorage.link"
+		},
+		"ml":{
+			"mlservice_url":"ml-api-dre.ai.dbankcloud.com,ml-api-dre.ai.dbankcloud.cn"
+		}
+	},
+	"region":"DE",
 	"configuration_version":"1.0"
 }
