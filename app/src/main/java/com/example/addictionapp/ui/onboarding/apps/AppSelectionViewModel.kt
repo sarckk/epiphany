@@ -1,14 +1,12 @@
-package com.example.addictionapp.ui.apps
+package com.example.addictionapp.ui.onboarding.apps
 
 import com.example.addictionapp.data.models.Application
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.addictionapp.data.blocklist.BlocklistRepository
 import com.example.addictionapp.data.models.ApplicationWithIcon
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class AppSelectionViewModel(
     private val blocklistRepository: BlocklistRepository

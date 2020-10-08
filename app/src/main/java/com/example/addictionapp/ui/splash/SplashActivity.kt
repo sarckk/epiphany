@@ -5,15 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.example.addictionapp.ui.MainActivity
-import com.example.addictionapp.ui.apps.AppSelectionActivity
+import com.example.addictionapp.ui.onboarding.OnboardingActivity
 import com.example.addictionapp.ui.permissions.PermissionsActivity
-import com.example.addictionapp.ui.reflection.list.ReflectionListViewModel
-import kotlinx.android.synthetic.main.fragment_reflection_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SplashActivity: AppCompatActivity() {
@@ -25,13 +20,14 @@ class SplashActivity: AppCompatActivity() {
         val usagePermissionGranted = getUsagePermissionStatus()
         Log.d("abcd", "permission - ${usagePermissionGranted.toString()}")
         val hasBlacklistedApps = hasBlacklistApps()
-        Log.d("abcd","finished getting blacklist")
+        Log.d("abcd","finished getting existing blacklist information")
 
         if(usagePermissionGranted) {
             if (hasBlacklistedApps) {
                 redirectToMain()
             } else {
-                redirectToBlacklist()
+                // onto onboarding
+                redirectToOnboarding()
             }
         }else {
             redirectToPermissions()
@@ -47,11 +43,11 @@ class SplashActivity: AppCompatActivity() {
         finish()
     }
 
-    private fun redirectToBlacklist() {
-        val gotoBlacklist = Intent(this, AppSelectionActivity::class.java)
+    private fun redirectToOnboarding() {
+        val gotoOnboarding = Intent(this, OnboardingActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        Log.d("abcd", "REDIRECT TO BLACKLIST")
-        startActivity(gotoBlacklist)
+        Log.d("abcd", "REDIRECT TO ONBOARDING")
+        startActivity(gotoOnboarding)
         finish()
     }
 

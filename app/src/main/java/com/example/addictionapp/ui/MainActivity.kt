@@ -47,6 +47,15 @@ class MainActivity : AppCompatActivity() {
     private fun setUpToolbar() {
         main_toolbar_text.setText(R.string.app_name)
         main_toolbar.inflateMenu(R.menu.menu_overview)
+
+        main_toolbar.setNavigationOnClickListener {
+            when(it.id){
+                R.id.settingsIcon -> {
+                    navController.navigate(R.id.appSelectionFragment)
+                }
+            }
+        }
+
         setUpFragmentToolbarVariants()
     }
 

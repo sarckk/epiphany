@@ -9,7 +9,7 @@ import com.example.addictionapp.data.blocklist.BlocklistRepositoryImpl
 import com.example.addictionapp.data.suggestions.SuggestionDatabase
 import com.example.addictionapp.data.suggestions.SuggestionRepository
 import com.example.addictionapp.data.suggestions.SuggestionRepositoryImpl
-import com.example.addictionapp.ui.apps.AppSelectionViewModel
+import com.example.addictionapp.ui.onboarding.apps.AppSelectionViewModel
 import com.example.addictionapp.ui.overview.OverviewViewModel
 import com.example.addictionapp.ui.reflection.create.WhatElseViewModel
 import com.example.addictionapp.ui.reflection.detail.ReflectionDetailViewModel

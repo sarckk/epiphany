@@ -1,7 +1,5 @@
-package com.example.addictionapp.ui.apps
+package com.example.addictionapp.ui.onboarding.apps
 
-import android.util.Log
-import android.widget.CompoundButton
 import com.example.addictionapp.R
 import com.example.addictionapp.data.models.ApplicationWithIcon
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder

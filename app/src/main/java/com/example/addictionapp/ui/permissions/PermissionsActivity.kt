@@ -20,12 +20,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
 import com.example.addictionapp.R
-import com.example.addictionapp.ui.apps.AppSelectionActivity
+import com.example.addictionapp.ui.onboarding.OnboardingActivity
 import kotlinx.android.synthetic.main.activity_permissions.*
 
 class PermissionsActivity : AppCompatActivity(){
-    private lateinit var navController: NavController
-
     companion object {
         const val TAG = "PermissionActivity"
         const val PERMISSIONS_ALL = 1
@@ -63,8 +61,9 @@ class PermissionsActivity : AppCompatActivity(){
         opsService.startWatchingMode(AppOpsManager.OPSTR_GET_USAGE_STATS, packageName, AppOpsManager.OnOpChangedListener{ op, packageName ->
             val permissionGranted =  opsService.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), packageName) == AppOpsManager.MODE_ALLOWED
             if(permissionGranted){
-                val gotoSelection = Intent(this, AppSelectionActivity::class.java)
-                startActivity(gotoSelection)
+                Log.d("abcd", "granted")
+                val gotoOnboarding = Intent(this, OnboardingActivity::class.java)
+                startActivity(gotoOnboarding)
             }
         })
     }
