@@ -15,10 +15,12 @@
             app:destination="@id/reflectionDetailFragment" />
         <action
             android:id="@+id/action_reflectionListFragment_to_wellbeingStateFragment"
-            app:destination="@id/wellbeingStateFragment" />
+            app:destination="@id/wellbeingStateFragment"
+            app:enterAnim="@anim/slide_up" />
         <argument
             android:name="confirmationMsg"
             app:argType="string"
+            android:defaultValue="@null"
             app:nullable="true" />
     </fragment>
     <fragment
@@ -48,6 +50,9 @@
         <action
             android:id="@+id/action_overviewFragment_to_reflectionListFragment"
             app:destination="@id/reflectionListFragment" />
+        <action
+            android:id="@+id/action_overviewFragment_to_suggestionsFragment"
+            app:destination="@id/suggestionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/wellbeingStateFragment"
@@ -70,5 +75,27 @@
             app:popUpTo="@id/reflectionListFragment"
             app:popUpToInclusive="true"
             app:destination="@id/reflectionListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/suggestionsFragment"
+        android:name="com.example.addictionapp.ui.suggestions.SuggestionsFragment"
+        android:label="SuggestionsFragment" >
+        <argument
+            android:name="fromOnboarding"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/appSelectionFragment"
+        android:name="com.example.addictionapp.ui.onboarding.apps.AppSelectionFragment"
+        android:label="AppSelectionFragment" >
+        <argument
+            android:name="fromMain"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_appSelectionFragment_to_overviewFragment"
+            app:destination="@id/overviewFragment"
+            app:launchSingleTop="true" />
     </fragment>
 </navigation>

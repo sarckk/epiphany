@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onboarding_nav_graph"
+    app:startDestination="@id/appSelectionFragment">
+
+    <fragment
+        android:id="@+id/appSelectionFragment"
+        android:name="com.example.addictionapp.ui.onboarding.apps.AppSelectionFragment"
+        android:label="AppSelectionFragment" >
+        <argument
+            android:name="fromMain"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_overviewFragment_to_suggestionsFragment"
+            app:destination="@id/suggestionsFragment"
+            app:enterAnim="@anim/mlkit_asr_popup_slide_show"
+            app:popUpTo="@id/onboarding_nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/suggestionsFragment"
+        android:name="com.example.addictionapp.ui.suggestions.SuggestionsFragment"
+        android:label="SuggestionsFragment" >
+        <argument
+            android:name="fromOnboarding"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+</navigation>

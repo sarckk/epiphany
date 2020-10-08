@@ -42,7 +42,7 @@
         </activity>
         <activity android:name=".ui.permissions.PermissionsActivity">
         </activity>
-        <activity android:name=".ui.apps.AppSelectionActivity">
+        <activity android:name=".ui.onboarding.OnboardingActivity">
         </activity>
         <activity android:name=".ui.MainActivity">
         </activity>

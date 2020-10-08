@@ -8,5 +8,5 @@ interface BlocklistRepository {
     fun getBlacklistedAppNameByPackageName(packageName: String): String
     fun getAllBlacklistedPackageNames(): List<String>
     suspend fun upsertApplication(application: Application)
-    suspend fun deleteApplication(application: Application)
+    suspend fun deleteApplication(packageName: String)
 }

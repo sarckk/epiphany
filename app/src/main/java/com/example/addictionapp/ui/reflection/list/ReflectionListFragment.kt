@@ -15,7 +15,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.addictionapp.R
 import com.example.addictionapp.data.models.Reflection
-import com.example.addictionapp.ui.reflection.detail.ReflectionDetailFragmentArgs
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_reflection_list.*
@@ -24,6 +23,13 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class ReflectionListFragment : Fragment() {
     private val args: ReflectionListFragmentArgs by navArgs()
     private val viewModel by viewModel<ReflectionListViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if(args.confirmationMsg != null){
+            Toast.makeText(context, args.confirmationMsg, Toast.LENGTH_SHORT).show()
+        }
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,10 +42,6 @@ class ReflectionListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        if(args.confirmationMsg != null){
-            Toast.makeText(context, args.confirmationMsg, Toast.LENGTH_SHORT).show()
-        }
-
         /**
         intent.getStringExtra("confirmation_msg")?.let{
             intent.removeExtra("confirmation_msg")
@@ -49,26 +51,13 @@ class ReflectionListFragment : Fragment() {
         }
         **/
 
-        setUpToolbar()
-
         // launch new Activity when LOG btn clicked
         createReflectionBtn.setOnClickListener {
             val action = ReflectionListFragmentDirections.actionReflectionListFragmentToWellbeingStateFragment()
-            Log.d("TEST", "HERE")
             findNavController().navigate(action)
         }
 
         bindUIToViewModel()
-    }
-
-    private fun setUpToolbar(){
-        listToolbar.let{
-            it.setNavigationIcon(R.drawable.ic_back)
-            it.setNavigationOnClickListener() {
-                findNavController().navigateUp()
-            }
-            it.title = "Your reflection history"
-        }
     }
 
     private fun bindUIToViewModel() {

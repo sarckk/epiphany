@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.addictionapp.data.ReflectionRepository
+import com.example.addictionapp.data.reflections.ReflectionRepository
 import com.example.addictionapp.data.models.Reflection
 import com.example.addictionapp.utils.Event
 import kotlinx.coroutines.launch

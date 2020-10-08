@@ -6,46 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layoutDescription="@xml/fragment_overview_scene">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/overviewToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_margin="10dp"
-        app:contentInsetStart="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="31dp"
-                android:layout_height="31dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/epiphany_logo" />
-
-            <TextView
-                android:id="@+id/overviewToolbarText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                tools:text="Epiphany" />
-        </LinearLayout>
-    </androidx.appcompat.widget.Toolbar>
-
     <RadioGroup
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toTopOf="@id/overviewChart"
-        app:layout_constraintTop_toBottomOf="@id/overviewToolbar"
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/radioGrp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -82,7 +46,7 @@
         android:layout_height="200dp"
         android:orientation="vertical"
         android:padding="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/test"
+        app:layout_constraintBottom_toBottomOf="parent"
         >
         <TextView
             android:id="@+id/overviewInfoDate"
@@ -104,16 +68,5 @@
             android:layout_weight="1"
             />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="toreflectionlist"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

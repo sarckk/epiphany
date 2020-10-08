@@ -1,12 +1,7 @@
-package com.example.addictionapp.data
+package com.example.addictionapp.data.reflections
 
 import com.example.addictionapp.data.models.Reflection
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 
 class ReflectionRepositoryImpl(
     private val reflectionDao: ReflectionDao

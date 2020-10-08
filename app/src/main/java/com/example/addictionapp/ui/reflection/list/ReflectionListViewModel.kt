@@ -1,15 +1,12 @@
 package com.example.addictionapp.ui.reflection.list
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.addictionapp.data.ReflectionRepository
+import com.example.addictionapp.data.reflections.ReflectionRepository
 import com.example.addictionapp.data.models.Reflection
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.onStart
 
-class ReflectionListViewModel(
-   private val reflectionRepository: ReflectionRepository
-): ViewModel() {
+class ReflectionListViewModel(private val reflectionRepository: ReflectionRepository): ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading

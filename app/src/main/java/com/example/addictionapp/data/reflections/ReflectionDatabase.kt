@@ -1,4 +1,4 @@
-package com.example.addictionapp.data
+package com.example.addictionapp.data.reflections
 
 import android.content.Context
 import androidx.room.Database
@@ -27,7 +27,7 @@ abstract class ReflectionDatabase: RoomDatabase() {
             }
         }
 
-        private fun buildDatabase(context: Context): ReflectionDatabase{
+        private fun buildDatabase(context: Context): ReflectionDatabase {
             return Room.databaseBuilder(context, ReflectionDatabase::class.java, "reflection_db").build()
         }
     }

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/addictionapp/ui/overview/OverviewFragment_BACKUP_25614.kt" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/addictionapp/ui/overview/OverviewFragment_BASE_25614.kt" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/addictionapp/ui/overview/OverviewFragment_LOCAL_25614.kt" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>

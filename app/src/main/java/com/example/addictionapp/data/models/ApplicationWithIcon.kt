@@ -7,6 +7,7 @@ class ApplicationWithIcon(
     val icon: Drawable,
     val name: String,
     val packageName: String,
+    var isBlacklisted: Boolean,
     val addToBlacklistedApps: (String, String) -> Unit,
-    val removeFromBlacklistedApps: (String, String) -> Unit
+    val removeFromBlacklistedApps: (String) -> Unit
 )
