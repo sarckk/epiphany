@@ -12,8 +12,6 @@ import androidx.room.PrimaryKey
 )
 data class Application(
     @PrimaryKey
-    @ColumnInfo(name="name")
     val name: String,
-    @ColumnInfo(name="packageName")
-    val packageName: String
+    val packageName: String,
 )

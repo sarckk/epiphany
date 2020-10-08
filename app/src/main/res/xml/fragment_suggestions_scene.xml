@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@+id/start"
+        app:duration="700">
+        <OnClick
+            app:clickAction="transitionToEnd"
+            app:targetId="@+id/createSuggestionBtn" />
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="1"
+                app:framePosition="0"
+                app:motionTarget="@id/suggestionDescription" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="50"
+                app:motionTarget="@id/suggestionDescription" />
+            <KeyAttribute
+                android:alpha="0"
+                app:framePosition="100"
+                app:motionTarget="@id/suggestionDescription" />
+
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="0"
+                app:framePosition="0"
+                app:motionTarget="@id/suggestionInput" />
+            <KeyAttribute
+                android:alpha="0"
+                android:scaleX="0.4"
+                app:framePosition="40"
+                app:motionTarget="@id/suggestionInput" />
+            <KeyAttribute
+                android:alpha="1"
+                android:scaleX="1.0"
+                app:framePosition="100"
+                app:motionTarget="@id/suggestionInput" />
+        </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@id/suggestionsLoadingScreen"
+            app:visibilityMode="ignore"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            />
+        <Constraint
+            android:id="@+id/noSuggestionImg"
+            app:visibilityMode="ignore"
+            android:layout_width="267dp"
+            android:layout_height="210dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="95dp"
+            android:src="@drawable/ic_suggestions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/suggestionDescription" />
+        <Constraint
+            android:id="@+id/noSuggestionText"
+            app:visibilityMode="ignore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:text="No suggestions yet"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noSuggestionImg" />
+        <Constraint
+            android:id="@+id/confirmSuggestionFab">
+            <PropertySet
+                android:alpha="0"/>
+        </Constraint>
+        <Constraint
+            android:id="@+id/finishSuggestionCreationBtn">
+            <PropertySet
+                android:visibility="invisible"/>
+        </Constraint>
+        <Constraint
+            android:id="@+id/createSuggestionBtn">
+            <PropertySet
+                android:visibility="visible"/>
+        </Constraint>
+    </ConstraintSet>
+
+    <!--  TODO: PropertySet + deriveConstantsFrom to clean up this mess -->
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@id/suggestionsLoadingScreen"
+            app:visibilityMode="ignore"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            />
+        <Constraint
+            android:id="@+id/noSuggestionImg"
+            app:visibilityMode="ignore"
+            android:layout_width="267dp"
+            android:layout_height="210dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="95dp"
+            android:src="@drawable/ic_suggestions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/suggestionDescription" />
+        <Constraint
+            android:id="@+id/noSuggestionText"
+            app:visibilityMode="ignore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:text="No suggestions yet"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noSuggestionImg" />
+        <Constraint
+            android:id="@+id/confirmSuggestionFab">
+            <PropertySet
+                android:alpha="1"/>
+        </Constraint>
+        <Constraint
+            android:id="@+id/finishSuggestionCreationBtn">
+            <PropertySet
+                android:visibility="visible"/>
+        </Constraint>
+        <Constraint
+            android:id="@+id/createSuggestionBtn">
+            <PropertySet
+                android:visibility="invisible"/>
+        </Constraint>
+    </ConstraintSet>
+
+</MotionScene>

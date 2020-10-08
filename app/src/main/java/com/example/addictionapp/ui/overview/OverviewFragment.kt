@@ -16,11 +16,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.addictionapp.R
-import com.example.addictionapp.data.ReflectionRepository
-import com.example.addictionapp.data.models.ApplicationWithIcon
-import com.example.addictionapp.data.models.Reflection
-import com.example.addictionapp.ui.apps.AppSelectionItem
-import com.example.addictionapp.ui.reflection.list.ReflectionListViewModel
 import com.example.addictionapp.utils.ChartModeEnum
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -33,7 +28,6 @@ import com.github.mikephil.charting.utils.Utils
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_overview.*
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 
@@ -57,7 +51,6 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
 
         viewModel.setStatsManager(context?.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager)
         setUpRadioListeners()
-        setUpToolbar()
         setUpLineChart()
         bindChartToViewModel()
     }
@@ -81,13 +74,8 @@ class OverviewFragment : Fragment(), OnChartValueSelectedListener {
         })
     }
 
-    private fun setUpToolbar() {
-        overviewToolbarText.setText(R.string.app_name)
-        overviewToolbar.inflateMenu(R.menu.menu_overview)
-    }
 
     private fun setNewData (newValues: List<Entry>, chartMode: ChartModeEnum) {
-        // TODO: Add license for MPAndroidChart
         var lineDataSet: LineDataSet
 
         if(overviewChart.data != null && overviewChart.data.dataSetCount > 0){

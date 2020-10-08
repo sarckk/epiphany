@@ -27,7 +27,7 @@
         </Constraint>
         <Constraint
             android:layout_height="200dp"
-            motion:layout_constraintBottom_toTopOf="@+id/test"
+            motion:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
             android:id="@+id/overviewInfo" />
     </ConstraintSet>
@@ -46,7 +46,7 @@
         </Constraint>
         <Constraint
             android:layout_height="500dp"
-            motion:layout_constraintBottom_toTopOf="@+id/test"
+            motion:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
             android:id="@+id/overviewInfo" />
     </ConstraintSet>

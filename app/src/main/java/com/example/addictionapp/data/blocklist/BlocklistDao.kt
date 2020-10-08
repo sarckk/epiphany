@@ -18,6 +18,6 @@ interface BlocklistDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(application: Application)
 
-    @Delete
-    suspend fun delete(application: Application)
+    @Query("DELETE FROM blacklist_table WHERE :packageName == packageName")
+    suspend fun delete(packageName: String)
 }

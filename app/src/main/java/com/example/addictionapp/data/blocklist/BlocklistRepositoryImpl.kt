@@ -23,7 +23,7 @@ class BlocklistRepositoryImpl(
         return blocklistDao.upsert(application)
     }
 
-    override suspend fun deleteApplication(application: Application) {
-        return blocklistDao.delete(application)
+    override suspend fun deleteApplication(packageName: String) {
+        return blocklistDao.delete(packageName)
     }
 }

@@ -1,11 +1,9 @@
 package com.example.addictionapp.ui.reflection.detail
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.addictionapp.data.ReflectionRepository
+import com.example.addictionapp.data.reflections.ReflectionRepository
 import com.example.addictionapp.data.models.Reflection
 import com.example.addictionapp.utils.Event
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ReflectionDetailViewModel (

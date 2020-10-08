@@ -5,15 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.example.addictionapp.ui.MainActivity
-import com.example.addictionapp.ui.apps.AppSelectionActivity
+import com.example.addictionapp.ui.onboarding.OnboardingActivity
 import com.example.addictionapp.ui.permissions.PermissionsActivity
-import com.example.addictionapp.ui.reflection.list.ReflectionListViewModel
-import kotlinx.android.synthetic.main.fragment_reflection_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SplashActivity: AppCompatActivity() {
@@ -24,13 +19,13 @@ class SplashActivity: AppCompatActivity() {
 
         val usagePermissionGranted = getUsagePermissionStatus()
         val hasBlacklistedApps = hasBlacklistApps()
-        Log.d("TEST", usagePermissionGranted.toString())
 
         if(usagePermissionGranted) {
             if (hasBlacklistedApps) {
                 redirectToMain()
             } else {
-                redirectToBlacklist()
+                // onto onboarding
+                redirectToOnboarding()
             }
         }else {
             redirectToPermissions()
@@ -41,23 +36,23 @@ class SplashActivity: AppCompatActivity() {
     private fun redirectToPermissions() {
         val gotoPermissions = Intent(this, PermissionsActivity::class.java)
         gotoPermissions.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        Log.d("TEST", "REDIRECT TO PERMISSIONS")
+        Log.d("abcd", "REDIRECT TO PERMISSIONS")
         startActivity(gotoPermissions)
         finish()
     }
 
-    private fun redirectToBlacklist() {
-        val gotoBlacklist = Intent(this, AppSelectionActivity::class.java)
+    private fun redirectToOnboarding() {
+        val gotoOnboarding = Intent(this, OnboardingActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        Log.d("TEST", "REDIRECT TO BLACKLIST")
-        startActivity(gotoBlacklist)
+        Log.d("abcd", "REDIRECT TO ONBOARDING")
+        startActivity(gotoOnboarding)
         finish()
     }
 
     private fun redirectToMain() {
         val gotoMain = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        Log.d("TEST", "REDIRECT TO MAIN")
+        Log.d("abcd", "REDIRECT TO MAIN")
         startActivity(gotoMain)
         finish()
     }
