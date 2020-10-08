@@ -8,5 +8,5 @@ interface SuggestionRepository {
     fun getAllSuggestions(): Flow<List<Suggestion>>
     suspend fun getSuggestion(id: Int): Suggestion
     suspend fun upsertSuggestion(suggestion: Suggestion)
-    suspend fun deleteSuggestion(suggestion: Suggestion)
+    suspend fun deleteSuggestion(id: Int)
 }

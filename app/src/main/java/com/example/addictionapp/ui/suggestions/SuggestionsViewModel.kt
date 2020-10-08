@@ -11,7 +11,7 @@ class SuggestionsViewModel(private val suggestionRepository: SuggestionRepositor
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-    val suggestions : LiveData<List<Suggestion>> =
+    val newSuggestions : LiveData<List<Suggestion>> =
         suggestionRepository.getAllSuggestions().onStart {
             _loading.value = true
         }.onEach{
@@ -23,6 +23,12 @@ class SuggestionsViewModel(private val suggestionRepository: SuggestionRepositor
         _loading.value = true
        val newSuggestion = Suggestion(0,suggestion)
        suggestionRepository.upsertSuggestion(newSuggestion)
+        _loading.value = false
+    }
+
+    fun deleteSuggestion(id: Int) = viewModelScope.launch{
+        _loading.value = true
+        suggestionRepository.deleteSuggestion(id)
         _loading.value = false
     }
 }

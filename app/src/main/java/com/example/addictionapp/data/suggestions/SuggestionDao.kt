@@ -16,6 +16,6 @@ interface SuggestionDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(suggestion: Suggestion)
 
-    @Delete
-    suspend fun delete(suggestion: Suggestion)
+    @Query("DELETE FROM suggestion_table WHERE id == :id")
+    suspend fun delete(id: Int)
 }
