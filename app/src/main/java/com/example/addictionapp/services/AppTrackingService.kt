@@ -49,7 +49,7 @@ class AppTrackingService : Service() {
         val MILLIS_IN_HOUR = 60 * 60 * 1000
 
         var startTimer = System.currentTimeMillis()
-        var lastNotifTimer = System.currentTimeMillis() - 60 * 60 * 1000
+        var lastNotifTimer = System.currentTimeMillis() - 60 * 60 * 1000 * 4
         var blacklistedAppRunning = false
 
         override fun run() {
@@ -59,7 +59,7 @@ class AppTrackingService : Service() {
             while (true) {
                 trackUsedApps()
                 if (!blacklistedAppRunning && System.currentTimeMillis() - lastNotifTimer > 4 * MILLIS_IN_HOUR) {
-                    lastNotifTimer = System.currentTimeMillis()
+                    Log.d("Epiphany", "test")
                     shouldShowNotification(timePreviousDay, (System.currentTimeMillis() - startTimer) / 1000)
                 }
                 //getTime()
@@ -123,6 +123,8 @@ class AppTrackingService : Service() {
         private fun shouldShowNotification(timePreviousDay: Long, currentTimeRunning: Long) {
 
             if (notifier.shouldNotify(timePreviousDay, currentTimeRunning)) {
+
+                lastNotifTimer = System.currentTimeMillis()
                 val pendingIntent: PendingIntent =
                     Intent(context, AppTrackingService::class.java).let { notificationIntent ->
                         PendingIntent.getActivity(context, 0, notificationIntent, 0)

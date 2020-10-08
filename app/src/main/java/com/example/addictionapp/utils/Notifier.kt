@@ -5,8 +5,8 @@ import java.util.*
 class Notifier {
     fun shouldNotify(hoursPreviousDay: Long, currentTimeOpen: Long): Boolean {
         val rand = Random()
-        val index = rand.nextDouble()
-        val personalCoefficient = 6 / hoursPreviousDay.toDouble()
+        val index = 10000//rand.nextDouble()
+        val personalCoefficient = 1 / hoursPreviousDay.toDouble()
         val probability = Math.abs(
             1 / Math.log10(
                 Math.pow(
@@ -15,6 +15,6 @@ class Notifier {
                 ) / 30
             )
         )
-        return (index < probability)
+        return true//(index < probability)
     }
 }
