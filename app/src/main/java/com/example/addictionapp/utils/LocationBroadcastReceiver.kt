@@ -26,10 +26,10 @@ class LocationBroadcastReceiver : BroadcastReceiver() {
                     ActivityIdentificationData.VEHICLE -> result = "VEHICLE"
                     ActivityIdentificationData.BIKE -> result = "BIKE"
                     ActivityIdentificationData.FOOT -> result = "FOOT"
-                    ActivityIdentificationData.STILL -> result = "STILL"
+                    ActivityIdentificationData.STILL -> result = "standing"
                     ActivityIdentificationData.OTHERS -> result = "OTHERS"
                     ActivityIdentificationData.TILTING -> result = "TILTING"
-                    ActivityIdentificationData.WALKING -> result = "WALKING"
+                    ActivityIdentificationData.WALKING -> result = "walking"
                     ActivityIdentificationData.RUNNING -> result = "RUNNING"
                 }
 

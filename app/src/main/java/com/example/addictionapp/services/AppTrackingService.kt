@@ -15,6 +15,7 @@ import androidx.navigation.NavDeepLinkBuilder
 import com.example.addictionapp.R
 import com.example.addictionapp.data.reflections.ReflectionRepository
 import com.example.addictionapp.data.blocklist.BlocklistRepository
+import com.example.addictionapp.data.models.suggestion.ActivitySuggestion
 import com.example.addictionapp.ui.MainActivity
 import com.example.addictionapp.utils.Awareness
 import com.example.addictionapp.utils.LocationBroadcastReceiver
@@ -38,6 +39,7 @@ class AppTrackingService : Service() {
         val awareness = Awareness()
         val CHANNEL_ID = "EpiphanyImportant"
         val notifier = Notifier()
+        val activities = ActivitySuggestion()
         val reflectionRepo = reflectionRepo
         val applicationsPackageNames = repo.getAllBlacklistedApps().map {
             it.packageName
@@ -60,7 +62,7 @@ class AppTrackingService : Service() {
                     lastNotifTimer = System.currentTimeMillis()
                     shouldShowNotification(timePreviousDay, (System.currentTimeMillis() - startTimer) / 1000)
                 }
-                getTime()
+                //getTime()
                 trackActivities()
                 sleep(1000)
             }
@@ -131,7 +133,7 @@ class AppTrackingService : Service() {
                     }
                 val notification = Notification.Builder(context, CHANNEL_ID)
                     .setContentTitle("Stay strong!")
-                    .setContentText("We detected that you're likely to use social media!")
+                    .setContentText("We detected that you're likely to use social media! Do " + activities.getActivity("morning", "walking") + " instead")
                     .setSmallIcon(R.drawable.epiphany_logo)
                     .setContentIntent(pendingIntent)
                     .setTicker("todo")
