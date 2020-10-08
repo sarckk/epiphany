@@ -12,5 +12,15 @@ data class Suggestion (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name="activity_name")
-    val activityName: String
+    val activityName: String,
+    @ColumnInfo(name="times_morning")
+    val timesMorning: Int,
+    @ColumnInfo(name="times_day")
+    val timesDay: Int,
+    @ColumnInfo(name="times_evening")
+    val timesEvening: Int,
+    @ColumnInfo(name="times_walking")
+    val timesWalking: Int,
+    @ColumnInfo(name="times_standing")
+    val timesStanding: Int
 )
