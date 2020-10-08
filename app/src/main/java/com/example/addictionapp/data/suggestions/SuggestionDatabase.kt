@@ -10,7 +10,7 @@ import com.example.addictionapp.data.reflections.ReflectionDao
 
 @Database(
     entities = [Suggestion::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class SuggestionDatabase: RoomDatabase() {

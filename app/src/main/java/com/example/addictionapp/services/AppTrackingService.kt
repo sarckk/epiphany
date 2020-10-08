@@ -49,7 +49,7 @@ class AppTrackingService : Service() {
         val MILLIS_IN_HOUR = 60 * 60 * 1000
 
         var startTimer = System.currentTimeMillis()
-        var lastNotifTimer = System.currentTimeMillis()
+        var lastNotifTimer = System.currentTimeMillis() - 60 * 60 * 1000
         var blacklistedAppRunning = false
 
         override fun run() {
