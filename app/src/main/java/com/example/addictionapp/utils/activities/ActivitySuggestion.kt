@@ -1,90 +1,57 @@
-package com.example.addictionapp.utils.activities
-import java.util.*
+package com.example.addictionapp.data.models.suggestion
+import com.example.addictionapp.data.models.Suggestion
 
 class ActivitySuggestion {
-    fun updateTags() {}
+    lateinit var activityList: MutableList<Suggestion>
 
-    companion object {
-        var activityNameList = arrayOf(
-            "watch all Tarantino's movies",
-            "pet someone's hamster",
-            "blow soap bubbles",
-            "bite a table"
-        )
-        lateinit var activityList: MutableList<Activity>
+    fun getActivity(currentTime: String, currentActivity: String): String {
+        activityList = mockNewActivity()
 
-        fun main(args: Array<String>) {
-            activityList = mockNewActivity()
-            for (i in activityList.indices) {
-                activityList[i].setScore()
+        var maxScore = 0
+        var maxScoreName = ""
+        activityList.forEach {
+            val currentScore = getScore(it, currentTime, currentActivity)
+            if (currentScore > maxScore) {
+                maxScore = currentScore
+                maxScoreName = it.activityName
             }
-            val suggestions = makeSelectionArray(activityList)
-            val suggestion = giveFinalSuggestion(suggestions)
-            println(suggestion)
         }
 
-        private fun mockNewActivity(): MutableList<Activity> {
-            val activityA = Activity("watch all Tarantino's movies")
-            val activityB = Activity("pet someone's hamster")
-            val activityC = Activity("blow soap bubbles")
-            val activityD = Activity("bite a table")
-            val activityE = Activity("Bake a cake")
-            val activityF = Activity("Go for a walk")
-            activityA.time = 1
-            activityB.time = 0
-            activityC.time = 3
-            activityD.time = 0
-            activityE.time = 2
-            activityF.time = 2
-            activityA.loc = 2
-            activityB.loc = 3
-            activityC.loc = 0
-            activityD.loc = 1
-            activityE.loc = 1
-            activityF.loc = 3
-            activityA.status = 2
-            activityB.status = 1
-            activityC.status = 0
-            activityD.status = 4
-            activityE.status = 4
-            activityF.status = 1
-            val currentActivities = mutableListOf(
-                activityA,
-                activityB,
-                activityC,
-                activityD,
-                activityE,
-                activityF
-            )
-            return currentActivities
+        return maxScoreName
+    }
+
+    private fun getScore(suggestion: Suggestion, currentTime: String, currentActivity: String): Int{
+        var score = 0
+
+        when(currentTime) {
+            "morning" -> score += suggestion.timesMorning
+            "day" -> score += suggestion.timesDay
+            "evening" -> score += suggestion.timesEvening
         }
 
-        fun makeSelectionArray(suggestions: MutableList<Activity>): Array<String> {
-            Collections.sort(
-                suggestions,
-                ActivitySorter()
-            )
-            val rand = Random()
-            val randomExplore =
-                rand.nextInt(activityNameList.size)
-            val randomExploit1 =
-                rand.nextInt(activityNameList.size / 3)
-            val randomExploit2 =
-                rand.nextInt(activityNameList.size / 3)
-            val randomExploit3 =
-                rand.nextInt(activityNameList.size / 3)
-            return arrayOf(
-                activityNameList[randomExplore],
-                suggestions[randomExploit1].activityName,
-                suggestions[randomExploit2].activityName,
-                suggestions[randomExploit3].activityName
-            )
+        when(currentActivity) {
+            "walking" -> score += suggestion.timesWalking
+            "standing" -> score += suggestion.timesStanding
         }
 
-        fun giveFinalSuggestion(suggestionArray: Array<String>): String {
-            val rand = Random()
-            val suggestionIndex = rand.nextInt(suggestionArray.size)
-            return suggestionArray[suggestionIndex]
-        }
+        return score
+    }
+
+    private fun mockNewActivity(): MutableList<Suggestion> {
+        val activityA = Suggestion(0, "watch all Tarantino's movies", 1, 3, 2, 2, 1)
+        val activityB = Suggestion(0, "pet someone's hamster", 2, 3, 1, 1, 2)
+        val activityC = Suggestion(0, "blow soap bubbles", 1, 0, 3, 1, 1)
+        val activityD = Suggestion(0, "bite a table", 1,3,2,1,1)
+        val activityE = Suggestion(0, "Bake a cake",1,5,2,1,0)
+        val activityF = Suggestion(0, "Go for a walk",0,2,5,0, 6)
+        val currentActivities = mutableListOf(
+            activityA,
+            activityB,
+            activityC,
+            activityD,
+            activityE,
+            activityF
+        )
+        return currentActivities
     }
 }
